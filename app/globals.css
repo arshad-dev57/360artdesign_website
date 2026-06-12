@@ -1,7 +1,225 @@
-/* PURANA — hata do */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* NAYA — yeh rakho */
 @import "tailwindcss";
+
+/* ===== ANIMATIONS ===== */
+@keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.6} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes slideIn { from{opacity:0;transform:translateX(-24px)} to{opacity:1;transform:translateX(0)} }
+@keyframes slideInFromRight { from{transform:translateX(100%)} to{transform:translateX(0)} }
+@keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+@keyframes dropdownFadeIn { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes mobileMenuSlide { from{transform:translateX(100%)} to{transform:translateX(0)} }
+@keyframes mobileOverlayFade { from{opacity:0} to{opacity:1} }
+@keyframes sceneFloat { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-12px)} }
+@keyframes wave1 { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes wave2 { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes wave3 { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes waveMove1 { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes waveMove2 { 0%{transform:translateX(-50%)} 100%{transform:translateX(0)} }
+@keyframes waveMove3 { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+@keyframes waveScroll { 0%{transform:translateX(-50%)} 100%{transform:translateX(0%)} }
+@keyframes twinkle { 0%,100%{opacity:.2;transform:scale(1)} 50%{opacity:.8;transform:scale(1.4)} }
+@keyframes clientsScroll { from{transform:translateX(-50%)} to{transform:translateX(0%)} }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+@keyframes modalFade { from{opacity:0} to{opacity:1} }
+@keyframes modalSlide { from{transform:translateY(36px) scale(0.97);opacity:0} to{transform:translateY(0) scale(1);opacity:1} }
+@keyframes priceFadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+@keyframes bgDotDrift { 0%{transform:translate(0,0)} 50%{transform:translate(6px,-10px)} 100%{transform:translate(0,0)} }
+@keyframes paintbrushPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
+@keyframes featureFadeIn { from{opacity:0;transform:translateX(30px)} to{opacity:1;transform:translateX(0)} }
+@keyframes rocketFloat { 0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-20px) rotate(-5deg)} }
+@keyframes exhaustFlame { 0%,100%{opacity:0.7;transform:scaleY(1)} 50%{opacity:1;transform:scaleY(1.2)} }
+@keyframes arrowBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+@keyframes heroFadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+@keyframes formSlideIn { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:translateX(0)} }
+
+/* ===== HEADER ===== */
+.mobile-menu-open { animation: mobileMenuSlide 0.3s ease forwards !important; }
+.mobile-overlay { animation: mobileOverlayFade 0.3s ease forwards !important; }
+.header-nav-link:hover { color: #e22222 !important; }
+.desktop-hire-btn {
+  background: #e22222;
+  color: #fff;
+  border: none;
+  flex-shrink: 0;
+  font-family: "Nunito", sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 10px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+.desktop-hire-btn:hover { background: #b71c1c; }
+.desktop-hire-btn .grey-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background: #888;
+  transform: scale(0);
+  transform-origin: top right;
+  transition: transform 0.5s ease-in-out;
+  border-radius: 8px;
+  z-index: -1;
+  pointer-events: none;
+}
+.desktop-hire-btn:hover .grey-overlay { transform: scale(1); }
+@media (max-width: 1024px) {
+  .desktop-nav { display: none !important; }
+  .desktop-hire-btn { display: none !important; }
+  .mobile-menu-btn { display: flex !important; }
+  header > div { padding: 0 20px !important; }
+  header { height: 70px !important; }
+}
+@media (min-width: 1025px) {
+  .mobile-menu-btn { display: none !important; }
+  .mobile-menu-container { display: none !important; }
+}
+
+/* ===== HERO ===== */
+.wave-track1 { animation: wave1 8s linear infinite; }
+.wave-track2 { animation: wave2 12s linear infinite reverse; }
+.wave-track3 { animation: wave3 6s linear infinite; }
+.slide-content { animation: slideIn 0.5s ease forwards; }
+.hero-nav-btn { transition: all 0.2s ease; }
+.hero-nav-btn:hover { transform: scale(1.1) !important; background: rgba(226,34,34,0.3) !important; border-color: rgba(226,34,34,0.8) !important; }
+.hero-scene { animation: sceneFloat 6s ease-in-out infinite; }
+.scroll-top-btn:hover { background: #b71c1c !important; box-shadow: 0 8px 30px rgba(226,34,34,0.6) !important; }
+@media (max-width: 768px) {
+  .hero-container { flex-direction: column !important; text-align: center !important; padding: 20px 20px 60px !important; }
+  .hero-content { width: 100% !important; padding-right: 0 !important; margin-bottom: 40px !important; }
+  .hero-buttons { justify-content: center !important; flex-wrap: wrap !important; margin-bottom: 30px !important; }
+  .hero-buttons button { padding: 12px 24px !important; font-size: 14px !important; }
+  .hero-nav-buttons { justify-content: center !important; }
+  .hero-scene svg { width: 100% !important; height: auto !important; max-width: 400px !important; }
+  .hero-nav-buttons button { width: 45px !important; height: 45px !important; }
+  .hero-dots { gap: 6px !important; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-container { flex-direction: column !important; text-align: center !important; padding: 40px 30px 80px !important; }
+  .hero-content { width: 100% !important; padding-right: 0 !important; margin-bottom: 50px !important; }
+  .hero-buttons { justify-content: center !important; }
+}
+
+/* ===== STATS ===== */
+@media (max-width: 768px) {
+  .stats-container { margin-top: -30px !important; padding: 0 20px !important; }
+  .stats-bar { flex-wrap: wrap !important; padding: 15px 20px !important; }
+  .stats-item { flex: 1 1 40% !important; text-align: center !important; padding: 10px !important; }
+  .stats-divider { display: none !important; }
+  .stats-number { font-size: 18px !important; }
+  .stats-label { font-size: 10px !important; }
+}
+
+/* ===== CLIENTS ===== */
+@media (max-width: 768px) {
+  .clients-section { padding: 60px 20px 50px !important; }
+  .clients-track { gap: 40px !important; }
+  .clients-track svg { width: 120px !important; height: auto !important; }
+}
+
+/* ===== SERVICES ===== */
+@media (max-width: 1024px) {
+  .services-container { flex-direction: column !important; align-items: center !important; gap: 50px !important; }
+  .services-container > div { width: 100% !important; max-width: 320px !important; }
+  .services-arrow { display: none !important; }
+}
+@media (max-width: 768px) {
+  .services-section { padding: 60px 20px 70px !important; }
+}
+
+/* ===== PORTFOLIO ===== */
+.fade-in-up { opacity:0; transform:translateY(20px); animation-name:fadeInUp; animation-duration:0.5s; animation-fill-mode:both; animation-timing-function:ease; }
+.pf-card-wrap:hover .pf-img { transform: scale(1.06); }
+.pf-card-wrap:hover .pf-overlay { opacity: 1 !important; }
+@media (max-width: 768px) {
+  .portfolio-section { padding: 60px 20px 70px !important; }
+  .portfolio-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 24px !important; }
+}
+
+/* ===== PRICING ===== */
+.price-card { animation: priceFadeIn 0.4s ease both; }
+.features-list { max-height: 180px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: #e22222 #f0f0f0; }
+.features-list::-webkit-scrollbar { width: 4px; }
+.features-list::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 2px; }
+.features-list::-webkit-scrollbar-thumb { background: #e22222; border-radius: 2px; }
+.order-btn:hover { background: #c00000 !important; }
+.price-card-inner:hover { transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.12) !important; }
+.tab-btn:hover { background: rgba(255,255,255,0.7) !important; }
+.wave-animate { animation: waveScroll 4s linear infinite; }
+@media (max-width: 768px) {
+  .pricing-section { padding: 60px 20px !important; }
+  .pricing-tabs { flex-wrap: wrap !important; gap: 8px !important; padding: 12px !important; }
+  .pricing-tabs button { padding: 8px 14px !important; font-size: 12px !important; }
+  .pricing-grid { grid-template-columns: 1fr !important; gap: 30px !important; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .pricing-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 25px !important; }
+}
+
+/* ===== WHY CHOOSE US ===== */
+.why-feature { animation: featureFadeIn 0.5s ease both; }
+.why-feature:hover .why-num-circle { transform: scale(1.1); }
+.why-num-circle { transition: transform 0.3s ease; }
+@media (max-width: 768px) {
+  .why-choose-section { padding: 60px 20px !important; }
+  .why-choose-container { flex-direction: column !important; text-align: center !important; gap: 40px !important; }
+  .why-choose-left { width: 100% !important; }
+  .why-choose-right { width: 100% !important; }
+}
+
+/* ===== TESTIMONIALS ===== */
+@media (max-width: 768px) {
+  .testimonials-section { padding: 60px 20px 80px !important; }
+  .testimonial-card { padding: 30px 20px !important; }
+  .testimonial-nav-buttons { padding: 15px 20px 25px !important; flex-wrap: wrap !important; gap: 15px !important; }
+}
+
+/* ===== FOOTER ===== */
+@media (max-width: 768px) {
+  .footer-container { padding: 50px 20px 40px !important; }
+  .newsletter-box { flex-direction: column !important; text-align: center !important; padding: 30px 20px !important; }
+  .footer-grid { grid-template-columns: 1fr !important; gap: 40px !important; text-align: center !important; }
+  .footer-bottom { flex-direction: column !important; text-align: center !important; gap: 15px !important; }
+  .footer-social { justify-content: center !important; }
+  .footer-logo { justify-content: center !important; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .footer-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 40px !important; }
+}
+
+/* ===== SERVICES PAGE ===== */
+.hero-content-anim { animation: heroFadeUp 0.8s ease both; }
+.hero-form-anim { animation: formSlideIn 0.9s ease 0.2s both; }
+.hero-btn-primary:hover { background: #b71c1c !important; }
+.hero-btn-outline:hover { background: rgba(255,255,255,0.15) !important; }
+.form-input-hero:focus { border-color: #e22222 !important; outline: none; box-shadow: 0 0 0 3px rgba(226,34,34,0.1); }
+.submit-btn-hero:hover { background: #b71c1c !important; }
+.submit-btn-hero:disabled { opacity: 0.7; cursor: not-allowed; }
+.spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid #fff; border-top: 2px solid transparent; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; }
+.service-img { transition: transform 0.5s ease; }
+.service-img-wrap:hover .service-img { transform: scale(1.04); }
+.service-get-btn:hover { background: #b71c1c !important; transform: translateY(-2px); }
+.service-talk-btn:hover { border-color: #e22222 !important; color: #e22222 !important; }
+@media (max-width: 768px) {
+  .hero-container { flex-direction: column !important; padding: 60px 20px 100px !important; text-align: center !important; }
+  .hero-content { width: 100% !important; max-width: 100% !important; margin-bottom: 40px !important; }
+  .hero-form { width: 100% !important; max-width: 100% !important; }
+  .service-item { flex-direction: column !important; text-align: center !important; margin-bottom: 60px !important; }
+  .service-image { width: 100% !important; margin-bottom: 30px !important; }
+  .service-buttons { justify-content: center !important; }
+  .consultancy-section { padding: 50px 20px !important; }
+  .form-grid { grid-template-columns: 1fr !important; gap: 15px !important; }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-container { flex-direction: column !important; text-align: center !important; padding: 60px 30px 100px !important; }
+  .service-item { gap: 40px !important; }
+  .service-image { flex: 0 0 45% !important; }
+}

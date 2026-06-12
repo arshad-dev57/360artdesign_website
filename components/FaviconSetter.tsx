@@ -2,36 +2,40 @@
 
 import { useEffect } from "react";
 
+const FAVICON_ID = "dynamic-favicon";
+
+function setLinkType(link: HTMLLinkElement, url: string) {
+  if (url.endsWith(".png")) link.type = "image/png";
+  else if (url.endsWith(".svg")) link.type = "image/svg+xml";
+  else if (url.endsWith(".ico")) link.type = "image/x-icon";
+  else link.type = "image/png";
+}
+
 export default function FaviconSetter() {
   useEffect(() => {
     const setFavicon = async () => {
       try {
-        const response = await fetch('https://360artdesign-backend.vercel.app/api/settings/logo');
+        const response = await fetch("https://360artdesign-backend.vercel.app/api/settings/logo");
         const result = await response.json();
-        if (result.success && result.data?.type === 'image' && result.data?.imageUrl) {
-          const logoUrl = result.data.imageUrl;
-          
-          // Remove existing favicon links
-          const existingLinks = document.querySelectorAll("link[rel*='icon']");
-          existingLinks.forEach(link => link.remove());
-          
-          // Create new link element
-          const link = document.createElement('link');
-          link.rel = 'icon';
+        if (result.success && result.data?.type === "image" && result.data?.imageUrl) {
+          const logoUrl = result.data.imageUrl as string;
+          let link = document.getElementById(FAVICON_ID) as HTMLLinkElement | null;
+
+          if (!link) {
+            link = document.createElement("link");
+            link.id = FAVICON_ID;
+            link.rel = "icon";
+            document.head.appendChild(link);
+          }
+
           link.href = logoUrl;
-          // Optionally set type based on file extension
-          if (logoUrl.endsWith('.png')) link.type = 'image/png';
-          else if (logoUrl.endsWith('.svg')) link.type = 'image/svg+xml';
-          else if (logoUrl.endsWith('.ico')) link.type = 'image/x-icon';
-          else link.type = 'image/png'; // default
-            
-          document.head.appendChild(link);
+          setLinkType(link, logoUrl);
         }
       } catch (error) {
-        console.error('Failed to set dynamic favicon:', error);
+        console.error("Failed to set dynamic favicon:", error);
       }
     };
-    
+
     setFavicon();
   }, []);
 

@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { FaPhoneAlt, FaTimes, FaEnvelope, FaMapMarkerAlt, FaArrowRight, FaCheckCircle, FaArrowUp } from "react-icons/fa";
 import { FaCommentDots } from "react-icons/fa";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 // ==================== NAV LINKS ====================
 const navLinks = [
@@ -122,9 +122,12 @@ function ConsultancyForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   );
 }
 
-// ==================== HEADER WITH MOBILE MENU ====================
+
+
+
 export function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [logo, setLogo] = useState<any>(null);
@@ -145,17 +148,21 @@ export function Header() {
 
   const fetchLogo = async () => {
     try {
-      const response = await fetch('https://360artdesign-backend.vercel.app/api/settings/logo');
+      const response = await fetch("https://360artdesign-backend.vercel.app/api/settings/logo");
       const result = await response.json();
-      if (result.success) {
-        setLogo(result.data);
-      }
+      if (result.success) setLogo(result.data);
     } catch (error) {
-      console.error('Error fetching logo:', error);
+      console.error("Error fetching logo:", error);
     } finally {
       setLoadingLogo(false);
     }
   };
+
+const isActive = (href: string) => {
+  if (!pathname) return false;
+  if (href === "/") return pathname === "/";
+  return pathname === href;
+};
 
   const dropdownServices = [
     { name: "Web Design", href: "/services" },
@@ -175,9 +182,7 @@ export function Header() {
   };
 
   const handleMouseLeave = () => {
-    hoverTimeout = setTimeout(() => {
-      setIsDropdownOpen(false);
-    }, 150);
+    hoverTimeout = setTimeout(() => setIsDropdownOpen(false), 150);
   };
 
   const activePillStyle: React.CSSProperties = {
@@ -188,6 +193,8 @@ export function Header() {
     fontSize: 13,
     fontWeight: 700,
     position: "relative",
+    textDecoration: "none",
+    display: "inline-block",
   };
 
   const inactiveLinkStyle: React.CSSProperties = {
@@ -198,6 +205,8 @@ export function Header() {
     fontWeight: 600,
     background: "transparent",
     transition: "color 0.18s",
+    textDecoration: "none",
+    display: "inline-block",
   };
 
   const renderLogo = () => {
@@ -205,8 +214,7 @@ export function Header() {
       return (
         <div
           style={{
-            width: 62,
-            height: 62,
+            width: 62, height: 62,
             background: "rgba(255,255,255,0.1)",
             borderRadius: 8,
             animation: "pulse 1.5s ease-in-out infinite",
@@ -214,33 +222,22 @@ export function Header() {
         />
       );
     }
-
-    if (logo?.type === 'image' && logo.imageUrl) {
+    if (logo?.type === "image" && logo.imageUrl) {
       return (
         <img
           src={logo.imageUrl}
           alt={logo.alt || "360 ArtDesign Logo"}
-          style={{
-            height: 105,
-            width: 'auto',
-            maxWidth: 180,
-            objectFit: "contain",
-            display: "block",
-          }}
+          style={{ height: 105, width: "auto", maxWidth: 180, objectFit: "contain", display: "block" }}
         />
       );
     }
-
     return (
       <div
         style={{
-          width: 55,
-          height: 55,
+          width: 55, height: 55,
           background: "radial-gradient(circle, #cc1111 20%, #7a0000 100%)",
           borderRadius: 8,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: 28,
           boxShadow: "0 0 16px rgba(200,20,20,0.45)",
         }}
@@ -253,28 +250,13 @@ export function Header() {
   return (
     <>
       <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.6; }
-        }
-        @keyframes dropdownFadeIn {
-          from { opacity: 0; transform: translateY(-10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes mobileMenuSlide {
-          from { transform: translateX(100%); }
-          to { transform: translateX(0); }
-        }
-        @keyframes mobileOverlayFade {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        .mobile-menu-open {
-          animation: mobileMenuSlide 0.3s ease forwards !important;
-        }
-        .mobile-overlay {
-          animation: mobileOverlayFade 0.3s ease forwards !important;
-        }
+        @keyframes pulse { 0%,100%{opacity:0.3}50%{opacity:0.6} }
+        @keyframes dropdownFadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes mobileMenuSlide{from{transform:translateX(100%)}to{transform:translateX(0)}}
+        @keyframes mobileOverlayFade{from{opacity:0}to{opacity:1}}
+        .mobile-menu-open{animation:mobileMenuSlide 0.3s ease forwards !important}
+        .mobile-overlay{animation:mobileOverlayFade 0.3s ease forwards !important}
+        .header-nav-link:hover { color: #e22222 !important; }
         @media (max-width: 1024px) {
           .desktop-nav { display: none !important; }
           .desktop-hire-btn { display: none !important; }
@@ -287,54 +269,40 @@ export function Header() {
           .mobile-menu-container { display: none !important; }
         }
       `}</style>
-      
+
       <header
         style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
+          position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
           background: scrolled ? "rgba(18,4,4,0.97)" : "rgba(18,4,4,0.85)",
           backdropFilter: "blur(14px)",
           borderBottom: "1px solid rgba(255,255,255,0.07)",
-          height: 82,
-          transition: "all 0.3s ease",
+          height: 82, transition: "all 0.3s ease",
           fontFamily: "'Nunito', sans-serif",
         }}
       >
         <div
           style={{
-            maxWidth: 1400,
-            margin: "0 auto",
-            padding: "0 36px",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 20,
+            maxWidth: 1400, margin: "0 auto", padding: "0 36px",
+            height: "100%", display: "flex", alignItems: "center",
+            justifyContent: "space-between", gap: 20,
           }}
         >
-          <Link
-            href="/"
-            style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}
-          >
+          <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
             {renderLogo()}
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="desktop-nav"
+          {/* Desktop Nav */}
+          <nav
+            className="desktop-nav"
             style={{
               background: "rgba(255,255,255,0.055)",
               border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 50,
-              padding: "5px 8px",
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
+              borderRadius: 50, padding: "5px 8px",
+              display: "flex", alignItems: "center", gap: 2,
             }}
           >
             {navLinks.map((l) => {
+              const active = isActive(l.href);
               if (l.name === "Services") {
                 return (
                   <div
@@ -346,43 +314,26 @@ export function Header() {
                   >
                     <button
                       style={{
-                        ...(l.active ? activePillStyle : inactiveLinkStyle),
-                        border: "none",
-                        cursor: "pointer",
+                        ...(active ? activePillStyle : inactiveLinkStyle),
+                        border: "none", cursor: "pointer",
                         fontFamily: "inherit",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 5,
+                        display: "flex", alignItems: "center", gap: 5,
                         whiteSpace: "nowrap",
                       }}
                     >
                       {l.name}
-                      <svg
-                        width="11"
-                        height="11"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                      >
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                         <polyline points="6 9 12 15 18 9" />
                       </svg>
                     </button>
-
                     {isDropdownOpen && (
                       <div
                         style={{
-                          position: "absolute",
-                          top: "100%",
-                          left: 0,
-                          marginTop: 12,
-                          background: "#1a1a2e",
-                          borderRadius: 16,
-                          minWidth: 220,
+                          position: "absolute", top: "100%", left: 0, marginTop: 12,
+                          background: "#1a1a2e", borderRadius: 16, minWidth: 220,
                           boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
                           border: "1px solid rgba(255,255,255,0.1)",
-                          overflow: "hidden",
-                          zIndex: 1000,
+                          overflow: "hidden", zIndex: 1000,
                           animation: "dropdownFadeIn 0.2s ease",
                         }}
                       >
@@ -391,50 +342,30 @@ export function Header() {
                             key={idx}
                             href={service.href}
                             style={{
-                              display: "flex",
-                              alignItems: "center",
+                              display: "flex", alignItems: "center",
                               justifyContent: "space-between",
                               padding: "12px 20px",
                               color: "rgba(255,255,255,0.8)",
-                              fontSize: 13,
-                              fontWeight: 500,
-                              textDecoration: "none",
-                              transition: "all 0.2s ease",
-                              borderBottom:
-                                idx < dropdownServices.length - 1
-                                  ? "1px solid rgba(255,255,255,0.05)"
-                                  : "none",
-                              background: "transparent",
+                              fontSize: 13, fontWeight: 500,
+                              textDecoration: "none", transition: "all 0.2s ease",
+                              borderBottom: idx < dropdownServices.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.color = "#e22222";
-                              const arrow = e.currentTarget.querySelector(".dropdown-arrow");
-                              if (arrow) {
-                                (arrow as HTMLElement).style.opacity = "1";
-                                (arrow as HTMLElement).style.transform = "translateX(5px)";
-                              }
+                              const arrow = e.currentTarget.querySelector(".dropdown-arrow") as HTMLElement | null;
+                              if (arrow) { arrow.style.opacity = "1"; arrow.style.transform = "translateX(5px)"; }
                             }}
                             onMouseLeave={(e) => {
                               e.currentTarget.style.color = "rgba(255,255,255,0.8)";
-                              const arrow = e.currentTarget.querySelector(".dropdown-arrow");
-                              if (arrow) {
-                                (arrow as HTMLElement).style.opacity = "0";
-                                (arrow as HTMLElement).style.transform = "translateX(0)";
-                              }
+                              const arrow = e.currentTarget.querySelector(".dropdown-arrow") as HTMLElement | null;
+                              if (arrow) { arrow.style.opacity = "0"; arrow.style.transform = "translateX(0)"; }
                             }}
                           >
                             <span>{service.name}</span>
                             <span
                               className="dropdown-arrow"
-                              style={{
-                                opacity: 0,
-                                transition: "opacity 0.2s ease, transform 0.2s ease",
-                                fontSize: 14,
-                                color: "#e22222",
-                              }}
-                            >
-                              →
-                            </span>
+                              style={{ opacity: 0, transition: "opacity 0.2s ease, transform 0.2s ease", fontSize: 14, color: "#e22222" }}
+                            >→</span>
                           </Link>
                         ))}
                       </div>
@@ -443,21 +374,12 @@ export function Header() {
                 );
               }
 
-              return l.active ? (
+              return (
                 <Link
                   key={l.name}
                   href={l.href}
-                  style={{ textDecoration: "none", ...activePillStyle }}
-                >
-                  {l.name}
-                </Link>
-              ) : (
-                <Link
-                  key={l.name}
-                  href={l.href}
-                  style={{ textDecoration: "none", ...inactiveLinkStyle }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#e22222")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.75)")}
+                  className={active ? "" : "header-nav-link"}
+                  style={active ? activePillStyle : inactiveLinkStyle}
                 >
                   {l.name}
                 </Link>
@@ -465,71 +387,28 @@ export function Header() {
             })}
           </nav>
 
-          {/* Desktop Hire Us Button */}
+          {/* Desktop Hire Us */}
           <button
             className="desktop-hire-btn"
-            onClick={() => router.push('/hire-us')}
-            style={{
-              background: "#e22222",
-              color: "#fff",
-              border: "none",
-              flexShrink: 0,
-              fontFamily: "'Nunito', sans-serif",
-              fontSize: 14,
-              fontWeight: 800,
-              padding: "10px 28px",
-              borderRadius: "8px",
-              cursor: "pointer",
-              position: "relative",
-              overflow: "hidden",
-              zIndex: 1,
-              transition: "all 0.3s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#b71c1c";
-              const overlay = e.currentTarget.querySelector(".grey-overlay") as HTMLElement | null;
-              if (overlay) overlay.style.transform = "scale(1)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#e22222";
-              const overlay = e.currentTarget.querySelector(".grey-overlay") as HTMLElement | null;
-              if (overlay) overlay.style.transform = "scale(0)";
-            }}
+            onClick={() => router.push("/hire-us")}
           >
             Hire Us
-            <span
-              className="grey-overlay"
-              style={{
-                position: "absolute",
-                top: 0,
-                right: 0,
-                width: "100%",
-                height: "100%",
-                background: "#888",
-                transform: "scale(0)",
-                transformOrigin: "top right",
-                transition: "transform 0.5s ease-in-out",
-                borderRadius: "8px",
-                zIndex: -1,
-                pointerEvents: "none",
-              }}
-            />
+            <span className="grey-overlay" aria-hidden="true" />
           </button>
 
           {/* Mobile Menu Button */}
-          <button className="mobile-menu-btn" onClick={() => setIsMobileMenuOpen(true)} style={{
-            background: "rgba(255,255,255,0.1)",
-            border: "1px solid rgba(255,255,255,0.2)",
-            cursor: "pointer",
-            width: 44,
-            height: 44,
-            borderRadius: 12,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#fff"
-          }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <button
+            className="mobile-menu-btn"
+            onClick={() => setIsMobileMenuOpen(true)}
+            style={{
+              background: "rgba(255,255,255,0.1)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              cursor: "pointer", width: 44, height: 44,
+              borderRadius: 12, display: "flex",
+              alignItems: "center", justifyContent: "center", color: "#fff",
+            }}
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <line x1="3" y1="12" x2="21" y2="12" />
               <line x1="3" y1="6" x2="21" y2="6" />
               <line x1="3" y1="18" x2="21" y2="18" />
@@ -541,21 +420,64 @@ export function Header() {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="mobile-menu-container" style={{ position: "fixed", inset: 0, zIndex: 1001, display: "flex" }}>
-          <div className="mobile-overlay" style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.8)", backdropFilter: "blur(8px)" }} onClick={() => setIsMobileMenuOpen(false)} />
-          <div className="mobile-menu-open" style={{ position: "relative", marginLeft: "auto", width: "85%", maxWidth: 320, height: "100%", background: "#1a1a2e", boxShadow: "-10px 0 40px rgba(0,0,0,0.4)", display: "flex", flexDirection: "column", overflowY: "auto" }}>
+          <div
+            className="mobile-overlay"
+            style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.8)", backdropFilter: "blur(8px)" }}
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          <div
+            className="mobile-menu-open"
+            style={{
+              position: "relative", marginLeft: "auto",
+              width: "85%", maxWidth: 320, height: "100%",
+              background: "#1a1a2e",
+              boxShadow: "-10px 0 40px rgba(0,0,0,0.4)",
+              display: "flex", flexDirection: "column", overflowY: "auto",
+            }}
+          >
             <div style={{ padding: 24, borderBottom: "1px solid rgba(255,255,255,0.1)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div style={{ fontWeight: 700, fontSize: 18, color: "#fff" }}>Menu</div>
-              <button onClick={() => setIsMobileMenuOpen(false)} style={{ background: "rgba(255,255,255,0.1)", border: "none", width: 40, height: 40, borderRadius: 10, cursor: "pointer", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  background: "rgba(255,255,255,0.1)", border: "none",
+                  width: 40, height: 40, borderRadius: 10,
+                  cursor: "pointer", color: "#fff",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}
+              >
                 <FaTimes size={18} />
               </button>
             </div>
             <div style={{ flex: 1, padding: "20px 0" }}>
-              {navLinks.map((link) => (
-                <Link key={link.name} href={link.href} onClick={() => setIsMobileMenuOpen(false)} style={{ display: "block", padding: "14px 24px", color: link.active ? "#e22222" : "rgba(255,255,255,0.8)", fontSize: 15, fontWeight: link.active ? 700 : 500, textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-                  {link.name}
-                </Link>
-              ))}
-              <button onClick={() => { router.push('/hire-us'); setIsMobileMenuOpen(false); }} style={{ margin: "20px 24px", width: "calc(100% - 48px)", background: "#e22222", color: "#fff", border: "none", padding: "14px", borderRadius: 10, fontSize: 15, fontWeight: 700, cursor: "pointer" }}>
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    style={{
+                      display: "block", padding: "14px 24px",
+                      color: active ? "#e22222" : "rgba(255,255,255,0.8)",
+                      fontSize: 15, fontWeight: active ? 700 : 500,
+                      textDecoration: "none",
+                      borderBottom: "1px solid rgba(255,255,255,0.05)",
+                    }}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+              <button
+                onClick={() => { router.push("/hire-us"); setIsMobileMenuOpen(false); }}
+                style={{
+                  margin: "20px 24px", width: "calc(100% - 48px)",
+                  background: "#e22222", color: "#fff", border: "none",
+                  padding: "14px", borderRadius: 10,
+                  fontSize: 15, fontWeight: 700, cursor: "pointer",
+                }}
+              >
                 Hire Us
               </button>
             </div>

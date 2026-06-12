@@ -2,43 +2,33 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { FaPhoneAlt, FaTimes, FaArrowUp, FaCommentDots } from "react-icons/fa";
-import { useRouter } from "next/navigation";
-
+import { useRouter, usePathname } from "next/navigation";
 // ==================== NAV LINKS ====================
 const navLinks = [
-  { name: "Home", href: "/", active: false },
-  { name: "Services", href: "/services", active: false },
-  { name: "Portfolio", href: "/portfolio", active: false },
-  { name: "Packages", href: "/packages", active: true },
-  { name: "Combo Packages", href: "/combo-packages", active: false },
-  { name: "Testimonials", href: "/testimonials", active: false },
+  { name: "Home", href: "/" },
+  { name: "Services", href: "/services" },
+  { name: "Portfolio", href: "/portfolio" },
+  { name: "Packages", href: "/packages" },
+  { name: "Combo Packages", href: "/combo-packages" },
+  { name: "Testimonials", href: "/testimonials" },
 ];
+
 
 // ==================== SCROLL TO TOP BUTTON ====================
 function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.scrollY > 500) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
+    const toggleVisibility = () => setIsVisible(window.scrollY > 500);
     window.addEventListener("scroll", toggleVisibility);
     return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   if (!isVisible) return null;
 
   return (
     <button
-      onClick={scrollToTop}
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       style={{
         position: "fixed",
         bottom: "30px",
@@ -69,6 +59,7 @@ function ScrollToTopButton() {
 function ConsultancyForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const [selectedCountry, setSelectedCountry] = useState("us");
   const [formData, setFormData] = useState({ fullName: "", email: "", number: "", message: "" });
+
   const countries = [
     { code: "us", flag: "🇺🇸", dialCode: "+1", name: "United States" },
     { code: "uk", flag: "🇬🇧", dialCode: "+44", name: "United Kingdom" },
@@ -81,11 +72,13 @@ function ConsultancyForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
     { code: "de", flag: "🇩🇪", dialCode: "+49", name: "Germany" },
     { code: "fr", flag: "🇫🇷", dialCode: "+33", name: "France" },
   ];
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     alert("Thank you! We will contact you soon.");
     onClose();
   };
+
   if (!isOpen) return null;
 
   return (
@@ -100,10 +93,7 @@ function ConsultancyForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
       <div
         style={{
           position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
+          top: 0, left: 0, right: 0, bottom: 0,
           background: "rgba(0,0,0,0.7)",
           zIndex: 1000,
           animation: "fadeIn 0.3s ease",
@@ -114,170 +104,72 @@ function ConsultancyForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
         className="consultancy-modal"
         style={{
           position: "fixed",
-          right: 0,
-          top: "50%",
+          right: 0, top: "50%",
           marginTop: "-250px",
-          width: "380px",
-          height: "500px",
+          width: "380px", height: "500px",
           background: "#fff",
           zIndex: 1001,
           boxShadow: "-5px 0 30px rgba(0,0,0,0.3)",
           animation: "slideInFromRight 0.3s ease-out",
-          display: "flex",
-          flexDirection: "column",
+          display: "flex", flexDirection: "column",
           borderRadius: "20px 0 0 20px",
           overflow: "hidden",
         }}
       >
-        <div
-          style={{
-            background: "#e22222",
-            padding: "20px",
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <div style={{ background: "#e22222", padding: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>
-            <h3 style={{ color: "#fff", margin: 0, fontSize: "18px", fontWeight: 700 }}>
-              Chat with us
-            </h3>
-            <p style={{ color: "#fff", margin: "5px 0 0", fontSize: "13px", opacity: 0.9 }}>
-              to avail 50% discount!
-            </p>
+            <h3 style={{ color: "#fff", margin: 0, fontSize: "18px", fontWeight: 700 }}>Chat with us</h3>
+            <p style={{ color: "#fff", margin: "5px 0 0", fontSize: "13px", opacity: 0.9 }}>to avail 50% discount!</p>
           </div>
-          <button
-            onClick={onClose}
-            style={{
-              background: "transparent",
-              border: "none",
-              cursor: "pointer",
-              color: "#fff",
-              fontSize: "18px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "5px",
-            }}
-          >
+          <button onClick={onClose} style={{ background: "transparent", border: "none", cursor: "pointer", color: "#fff", fontSize: "18px", display: "flex", alignItems: "center", justifyContent: "center", padding: "5px" }}>
             <FaTimes size={18} />
           </button>
         </div>
         <form onSubmit={handleSubmit} style={{ padding: "20px", flex: 1, overflowY: "auto" }}>
           <div style={{ marginBottom: "15px" }}>
-            <label style={{ display: "block", marginBottom: "6px", fontWeight: 600, color: "#333", fontSize: "13px" }}>
-              Full Name *
-            </label>
+            <label style={{ display: "block", marginBottom: "6px", fontWeight: 600, color: "#333", fontSize: "13px" }}>Full Name *</label>
             <input
-              type="text"
-              required
-              value={formData.fullName}
+              type="text" required value={formData.fullName}
               onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-              style={{
-                width: "100%",
-                padding: "10px 12px",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                fontSize: "14px",
-                outline: "none",
-              }}
+              style={{ width: "100%", padding: "10px 12px", border: "1px solid #ddd", borderRadius: "8px", fontSize: "14px", outline: "none" }}
             />
           </div>
           <div style={{ marginBottom: "15px" }}>
-            <label style={{ display: "block", marginBottom: "6px", fontWeight: 600, color: "#333", fontSize: "13px" }}>
-              Email *
-            </label>
+            <label style={{ display: "block", marginBottom: "6px", fontWeight: 600, color: "#333", fontSize: "13px" }}>Email *</label>
             <input
-              type="email"
-              required
-              value={formData.email}
+              type="email" required value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              style={{
-                width: "100%",
-                padding: "10px 12px",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                fontSize: "14px",
-                outline: "none",
-              }}
+              style={{ width: "100%", padding: "10px 12px", border: "1px solid #ddd", borderRadius: "8px", fontSize: "14px", outline: "none" }}
             />
           </div>
           <div style={{ marginBottom: "15px" }}>
-            <label style={{ display: "block", marginBottom: "6px", fontWeight: 600, color: "#333", fontSize: "13px" }}>
-              Phone Number *
-            </label>
+            <label style={{ display: "block", marginBottom: "6px", fontWeight: 600, color: "#333", fontSize: "13px" }}>Phone Number *</label>
             <div style={{ display: "flex", gap: "8px" }}>
               <select
                 value={selectedCountry}
                 onChange={(e) => setSelectedCountry(e.target.value)}
-                style={{
-                  padding: "10px",
-                  border: "1px solid #ddd",
-                  borderRadius: "8px",
-                  fontSize: "18px",
-                  outline: "none",
-                  cursor: "pointer",
-                  background: "#fff",
-                  width: "70px",
-                }}
+                style={{ padding: "10px", border: "1px solid #ddd", borderRadius: "8px", fontSize: "18px", outline: "none", cursor: "pointer", background: "#fff", width: "70px" }}
               >
                 {countries.map((country) => (
-                  <option key={country.code} value={country.code}>
-                    {country.flag}
-                  </option>
+                  <option key={country.code} value={country.code}>{country.flag}</option>
                 ))}
               </select>
               <input
-                type="tel"
-                required
-                value={formData.number}
-                placeholder="1234567890"
+                type="tel" required value={formData.number} placeholder="1234567890"
                 onChange={(e) => setFormData({ ...formData, number: e.target.value })}
-                style={{
-                  flex: 1,
-                  padding: "10px 12px",
-                  border: "1px solid #ddd",
-                  borderRadius: "8px",
-                  fontSize: "14px",
-                  outline: "none",
-                }}
+                style={{ flex: 1, padding: "10px 12px", border: "1px solid #ddd", borderRadius: "8px", fontSize: "14px", outline: "none" }}
               />
             </div>
           </div>
           <div style={{ marginBottom: "20px" }}>
-            <label style={{ display: "block", marginBottom: "6px", fontWeight: 600, color: "#333", fontSize: "13px" }}>
-              Message
-            </label>
+            <label style={{ display: "block", marginBottom: "6px", fontWeight: 600, color: "#333", fontSize: "13px" }}>Message</label>
             <textarea
-              value={formData.message}
-              rows={3}
+              value={formData.message} rows={3}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              style={{
-                width: "100%",
-                padding: "10px 12px",
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                fontSize: "14px",
-                outline: "none",
-                resize: "vertical",
-                fontFamily: "inherit",
-              }}
+              style={{ width: "100%", padding: "10px 12px", border: "1px solid #ddd", borderRadius: "8px", fontSize: "14px", outline: "none", resize: "vertical", fontFamily: "inherit" }}
             />
           </div>
-          <button
-            type="submit"
-            style={{
-              width: "100%",
-              background: "#e22222",
-              color: "#fff",
-              border: "none",
-              padding: "12px",
-              borderRadius: "8px",
-              fontSize: "15px",
-              fontWeight: 700,
-              cursor: "pointer",
-            }}
-          >
+          <button type="submit" style={{ width: "100%", background: "#e22222", color: "#fff", border: "none", padding: "12px", borderRadius: "8px", fontSize: "15px", fontWeight: 700, cursor: "pointer" }}>
             Submit
           </button>
         </form>
@@ -286,9 +178,74 @@ function ConsultancyForm({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
   );
 }
 
-// ==================== HEADER WITH MOBILE MENU ====================
+// ==================== FLOATING SIDE BUTTONS ====================
+function FloatingSideButtons({ onOpenForm }: { onOpenForm: () => void }) {
+  return (
+    <div style={{ position: "fixed", right: 0, top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: 12, zIndex: 999, alignItems: "flex-end" }}>
+      {/* Chat Button */}
+      <div
+        style={{ position: "relative", width: 50, height: 46, overflow: "visible" }}
+        onMouseEnter={(e) => {
+          const t = e.currentTarget.querySelector(".chat-tooltip") as HTMLElement | null;
+          const b = e.currentTarget.querySelector(".chat-button") as HTMLElement | null;
+          if (t) t.style.transform = "translateX(0)";
+          if (b) b.style.opacity = "0";
+        }}
+        onMouseLeave={(e) => {
+          const t = e.currentTarget.querySelector(".chat-tooltip") as HTMLElement | null;
+          const b = e.currentTarget.querySelector(".chat-button") as HTMLElement | null;
+          if (t) t.style.transform = "translateX(100%)";
+          if (b) b.style.opacity = "1";
+        }}
+      >
+        <button className="chat-button" style={{ background: "#e22222", border: "none", cursor: "pointer", width: 50, height: 46, borderRadius: "40px 0 0 40px", display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", right: 0, top: 0, zIndex: 2, transition: "opacity 0.3s ease-in-out" }}>
+          <FaCommentDots color="#fff" size={20} />
+        </button>
+        <div className="chat-tooltip" style={{ position: "absolute", right: 0, top: 0, height: 46, background: "#e22222", borderRadius: "40px 0 0 40px", display: "flex", alignItems: "center", padding: "0 20px", transform: "translateX(100%)", transition: "transform 0.3s ease-in-out", whiteSpace: "nowrap", fontFamily: "'Nunito', sans-serif", fontSize: 14, fontWeight: 700, color: "#fff", zIndex: 1, gap: "8px" }}>
+          <FaCommentDots color="#fff" size={20} />
+          <span>Chat with us</span>
+        </div>
+      </div>
+
+      {/* Phone Button */}
+      <div
+        style={{ position: "relative", width: 50, height: 46, overflow: "visible" }}
+        onMouseEnter={(e) => {
+          const t = e.currentTarget.querySelector(".phone-tooltip") as HTMLElement | null;
+          const b = e.currentTarget.querySelector(".phone-button") as HTMLElement | null;
+          if (t) t.style.transform = "translateX(0)";
+          if (b) b.style.opacity = "0";
+        }}
+        onMouseLeave={(e) => {
+          const t = e.currentTarget.querySelector(".phone-tooltip") as HTMLElement | null;
+          const b = e.currentTarget.querySelector(".phone-button") as HTMLElement | null;
+          if (t) t.style.transform = "translateX(100%)";
+          if (b) b.style.opacity = "1";
+        }}
+      >
+        <button className="phone-button" style={{ background: "#e22222", border: "none", cursor: "pointer", width: 50, height: 46, borderRadius: "40px 0 0 40px", display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", right: 0, top: 0, zIndex: 2, transition: "opacity 0.3s ease-in-out" }}>
+          <FaPhoneAlt color="#fff" size={18} />
+        </button>
+        <div className="phone-tooltip" style={{ position: "absolute", right: 0, top: 0, height: 46, background: "#e22222", borderRadius: "40px 0 0 40px", display: "flex", alignItems: "center", padding: "0 20px", transform: "translateX(100%)", transition: "transform 0.3s ease-in-out", whiteSpace: "nowrap", fontFamily: "'Nunito', sans-serif", fontSize: 14, fontWeight: 700, color: "#fff", zIndex: 1, gap: "8px" }}>
+          <FaPhoneAlt color="#fff" size={18} />
+          <span>+1 (800) 123-4567</span>
+        </div>
+      </div>
+
+      {/* Consultancy Button */}
+      <button
+        onClick={onOpenForm}
+        style={{ background: "#e22222", color: "#fff", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", width: 50, minHeight: 80, borderRadius: "20px 0 0 20px", fontFamily: "'Nunito', sans-serif", textAlign: "center", writingMode: "vertical-rl", textOrientation: "mixed", padding: "18px 0" }}
+      >
+        GET FREE CONSULTANCY
+      </button>
+    </div>
+  );
+}
+
 export function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [logo, setLogo] = useState<any>(null);
@@ -311,9 +268,7 @@ export function Header() {
     try {
       const response = await fetch("https://360artdesign-backend.vercel.app/api/settings/logo");
       const result = await response.json();
-      if (result.success) {
-        setLogo(result.data);
-      }
+      if (result.success) setLogo(result.data);
     } catch (error) {
       console.error("Error fetching logo:", error);
     } finally {
@@ -321,6 +276,11 @@ export function Header() {
     }
   };
 
+ const isActive = (href: string) => {
+  if (!pathname) return false;
+  if (href === "/") return pathname === "/";
+  return pathname === href;
+};
   const dropdownServices = [
     { name: "Web Design", href: "/services" },
     { name: "Ecommerce Solutions", href: "/services" },
@@ -339,9 +299,7 @@ export function Header() {
   };
 
   const handleMouseLeave = () => {
-    hoverTimeout = setTimeout(() => {
-      setIsDropdownOpen(false);
-    }, 150);
+    hoverTimeout = setTimeout(() => setIsDropdownOpen(false), 150);
   };
 
   const activePillStyle: React.CSSProperties = {
@@ -352,6 +310,8 @@ export function Header() {
     fontSize: 13,
     fontWeight: 700,
     position: "relative",
+    textDecoration: "none",
+    display: "inline-block",
   };
 
   const inactiveLinkStyle: React.CSSProperties = {
@@ -362,6 +322,8 @@ export function Header() {
     fontWeight: 600,
     background: "transparent",
     transition: "color 0.18s",
+    textDecoration: "none",
+    display: "inline-block",
   };
 
   const renderLogo = () => {
@@ -369,8 +331,7 @@ export function Header() {
       return (
         <div
           style={{
-            width: 62,
-            height: 62,
+            width: 62, height: 62,
             background: "rgba(255,255,255,0.1)",
             borderRadius: 8,
             animation: "pulse 1.5s ease-in-out infinite",
@@ -383,26 +344,17 @@ export function Header() {
         <img
           src={logo.imageUrl}
           alt={logo.alt || "360 ArtDesign Logo"}
-          style={{
-            height: 105,
-            width: "auto",
-            maxWidth: 180,
-            objectFit: "contain",
-            display: "block",
-          }}
+          style={{ height: 105, width: "auto", maxWidth: 180, objectFit: "contain", display: "block" }}
         />
       );
     }
     return (
       <div
         style={{
-          width: 55,
-          height: 55,
+          width: 55, height: 55,
           background: "radial-gradient(circle, #cc1111 20%, #7a0000 100%)",
           borderRadius: 8,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: "flex", alignItems: "center", justifyContent: "center",
           fontSize: 28,
           boxShadow: "0 0 16px rgba(200,20,20,0.45)",
         }}
@@ -421,6 +373,7 @@ export function Header() {
         @keyframes mobileOverlayFade{from{opacity:0}to{opacity:1}}
         .mobile-menu-open{animation:mobileMenuSlide 0.3s ease forwards !important}
         .mobile-overlay{animation:mobileOverlayFade 0.3s ease forwards !important}
+        .header-nav-link:hover { color: #e22222 !important; }
         @media (max-width: 1024px) {
           .desktop-nav { display: none !important; }
           .desktop-hire-btn { display: none !important; }
@@ -436,49 +389,37 @@ export function Header() {
 
       <header
         style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
+          position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
           background: scrolled ? "rgba(18,4,4,0.97)" : "rgba(18,4,4,0.85)",
           backdropFilter: "blur(14px)",
           borderBottom: "1px solid rgba(255,255,255,0.07)",
-          height: 82,
-          transition: "all 0.3s ease",
+          height: 82, transition: "all 0.3s ease",
           fontFamily: "'Nunito', sans-serif",
         }}
       >
         <div
           style={{
-            maxWidth: 1400,
-            margin: "0 auto",
-            padding: "0 36px",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            gap: 20,
+            maxWidth: 1400, margin: "0 auto", padding: "0 36px",
+            height: "100%", display: "flex", alignItems: "center",
+            justifyContent: "space-between", gap: 20,
           }}
         >
           <Link href="/" style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}>
             {renderLogo()}
           </Link>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <nav
             className="desktop-nav"
             style={{
               background: "rgba(255,255,255,0.055)",
               border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 50,
-              padding: "5px 8px",
-              display: "flex",
-              alignItems: "center",
-              gap: 2,
+              borderRadius: 50, padding: "5px 8px",
+              display: "flex", alignItems: "center", gap: 2,
             }}
           >
             {navLinks.map((l) => {
+              const active = isActive(l.href);
               if (l.name === "Services") {
                 return (
                   <div
@@ -490,13 +431,10 @@ export function Header() {
                   >
                     <button
                       style={{
-                        ...(l.active ? activePillStyle : inactiveLinkStyle),
-                        border: "none",
-                        cursor: "pointer",
+                        ...(active ? activePillStyle : inactiveLinkStyle),
+                        border: "none", cursor: "pointer",
                         fontFamily: "inherit",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 5,
+                        display: "flex", alignItems: "center", gap: 5,
                         whiteSpace: "nowrap",
                       }}
                     >
@@ -508,17 +446,11 @@ export function Header() {
                     {isDropdownOpen && (
                       <div
                         style={{
-                          position: "absolute",
-                          top: "100%",
-                          left: 0,
-                          marginTop: 12,
-                          background: "#1a1a2e",
-                          borderRadius: 16,
-                          minWidth: 220,
+                          position: "absolute", top: "100%", left: 0, marginTop: 12,
+                          background: "#1a1a2e", borderRadius: 16, minWidth: 220,
                           boxShadow: "0 20px 40px rgba(0,0,0,0.3)",
                           border: "1px solid rgba(255,255,255,0.1)",
-                          overflow: "hidden",
-                          zIndex: 1000,
+                          overflow: "hidden", zIndex: 1000,
                           animation: "dropdownFadeIn 0.2s ease",
                         }}
                       >
@@ -527,47 +459,30 @@ export function Header() {
                             key={idx}
                             href={service.href}
                             style={{
-                              display: "flex",
-                              alignItems: "center",
+                              display: "flex", alignItems: "center",
                               justifyContent: "space-between",
                               padding: "12px 20px",
                               color: "rgba(255,255,255,0.8)",
-                              fontSize: 13,
-                              fontWeight: 500,
-                              textDecoration: "none",
-                              transition: "all 0.2s ease",
+                              fontSize: 13, fontWeight: 500,
+                              textDecoration: "none", transition: "all 0.2s ease",
                               borderBottom: idx < dropdownServices.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
-                              background: "transparent",
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.color = "#e22222";
-                              const arrow = e.currentTarget.querySelector(".dropdown-arrow");
-                              if (arrow) {
-                                (arrow as HTMLElement).style.opacity = "1";
-                                (arrow as HTMLElement).style.transform = "translateX(5px)";
-                              }
+                              const arrow = e.currentTarget.querySelector(".dropdown-arrow") as HTMLElement | null;
+                              if (arrow) { arrow.style.opacity = "1"; arrow.style.transform = "translateX(5px)"; }
                             }}
                             onMouseLeave={(e) => {
                               e.currentTarget.style.color = "rgba(255,255,255,0.8)";
-                              const arrow = e.currentTarget.querySelector(".dropdown-arrow");
-                              if (arrow) {
-                                (arrow as HTMLElement).style.opacity = "0";
-                                (arrow as HTMLElement).style.transform = "translateX(0)";
-                              }
+                              const arrow = e.currentTarget.querySelector(".dropdown-arrow") as HTMLElement | null;
+                              if (arrow) { arrow.style.opacity = "0"; arrow.style.transform = "translateX(0)"; }
                             }}
                           >
                             <span>{service.name}</span>
                             <span
                               className="dropdown-arrow"
-                              style={{
-                                opacity: 0,
-                                transition: "opacity 0.2s ease, transform 0.2s ease",
-                                fontSize: 14,
-                                color: "#e22222",
-                              }}
-                            >
-                              →
-                            </span>
+                              style={{ opacity: 0, transition: "opacity 0.2s ease, transform 0.2s ease", fontSize: 14, color: "#e22222" }}
+                            >→</span>
                           </Link>
                         ))}
                       </div>
@@ -575,17 +490,13 @@ export function Header() {
                   </div>
                 );
               }
-              return l.active ? (
-                <Link key={l.name} href={l.href} style={{ textDecoration: "none", ...activePillStyle }}>
-                  {l.name}
-                </Link>
-              ) : (
+
+              return (
                 <Link
                   key={l.name}
                   href={l.href}
-                  style={{ textDecoration: "none", ...inactiveLinkStyle }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#e22222")}
-                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.75)")}
+                  className={active ? "" : "header-nav-link"}
+                  style={active ? activePillStyle : inactiveLinkStyle}
                 >
                   {l.name}
                 </Link>
@@ -593,55 +504,13 @@ export function Header() {
             })}
           </nav>
 
-          {/* Desktop Hire Us Button */}
+          {/* Desktop Hire Us */}
           <button
             className="desktop-hire-btn"
             onClick={() => router.push("/hire-us")}
-            style={{
-              background: "#e22222",
-              color: "#fff",
-              border: "none",
-              flexShrink: 0,
-              fontFamily: "'Nunito', sans-serif",
-              fontSize: 14,
-              fontWeight: 800,
-              padding: "10px 28px",
-              borderRadius: "8px",
-              cursor: "pointer",
-              position: "relative",
-              overflow: "hidden",
-              zIndex: 1,
-              transition: "all 0.3s ease",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#b71c1c";
-              const overlay = e.currentTarget.querySelector(".grey-overlay") as HTMLElement | null;
-              if (overlay) overlay.style.transform = "scale(1)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "#e22222";
-              const overlay = e.currentTarget.querySelector(".grey-overlay") as HTMLElement | null;
-              if (overlay) overlay.style.transform = "scale(0)";
-            }}
           >
             Hire Us
-            <span
-              className="grey-overlay"
-              style={{
-                position: "absolute",
-                top: 0,
-                right: 0,
-                width: "100%",
-                height: "100%",
-                background: "#888",
-                transform: "scale(0)",
-                transformOrigin: "top right",
-                transition: "transform 0.5s ease-in-out",
-                borderRadius: "8px",
-                zIndex: -1,
-                pointerEvents: "none",
-              }}
-            />
+            <span className="grey-overlay" aria-hidden="true" />
           </button>
 
           {/* Mobile Menu Button */}
@@ -651,14 +520,9 @@ export function Header() {
             style={{
               background: "rgba(255,255,255,0.1)",
               border: "1px solid rgba(255,255,255,0.2)",
-              cursor: "pointer",
-              width: 44,
-              height: 44,
-              borderRadius: 12,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "#fff",
+              cursor: "pointer", width: 44, height: 44,
+              borderRadius: 12, display: "flex",
+              alignItems: "center", justifyContent: "center", color: "#fff",
             }}
           >
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -681,16 +545,11 @@ export function Header() {
           <div
             className="mobile-menu-open"
             style={{
-              position: "relative",
-              marginLeft: "auto",
-              width: "85%",
-              maxWidth: 320,
-              height: "100%",
+              position: "relative", marginLeft: "auto",
+              width: "85%", maxWidth: 320, height: "100%",
               background: "#1a1a2e",
               boxShadow: "-10px 0 40px rgba(0,0,0,0.4)",
-              display: "flex",
-              flexDirection: "column",
-              overflowY: "auto",
+              display: "flex", flexDirection: "column", overflowY: "auto",
             }}
           >
             <div style={{ padding: 24, borderBottom: "1px solid rgba(255,255,255,0.1)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -698,56 +557,42 @@ export function Header() {
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 style={{
-                  background: "rgba(255,255,255,0.1)",
-                  border: "none",
-                  width: 40,
-                  height: 40,
-                  borderRadius: 10,
-                  cursor: "pointer",
-                  color: "#fff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  background: "rgba(255,255,255,0.1)", border: "none",
+                  width: 40, height: 40, borderRadius: 10,
+                  cursor: "pointer", color: "#fff",
+                  display: "flex", alignItems: "center", justifyContent: "center",
                 }}
               >
                 <FaTimes size={18} />
               </button>
             </div>
             <div style={{ flex: 1, padding: "20px 0" }}>
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  style={{
-                    display: "block",
-                    padding: "14px 24px",
-                    color: link.active ? "#e22222" : "rgba(255,255,255,0.8)",
-                    fontSize: 15,
-                    fontWeight: link.active ? 700 : 500,
-                    textDecoration: "none",
-                    borderBottom: "1px solid rgba(255,255,255,0.05)",
-                  }}
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    style={{
+                      display: "block", padding: "14px 24px",
+                      color: active ? "#e22222" : "rgba(255,255,255,0.8)",
+                      fontSize: 15, fontWeight: active ? 700 : 500,
+                      textDecoration: "none",
+                      borderBottom: "1px solid rgba(255,255,255,0.05)",
+                    }}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
               <button
-                onClick={() => {
-                  router.push("/hire-us");
-                  setIsMobileMenuOpen(false);
-                }}
+                onClick={() => { router.push("/hire-us"); setIsMobileMenuOpen(false); }}
                 style={{
-                  margin: "20px 24px",
-                  width: "calc(100% - 48px)",
-                  background: "#e22222",
-                  color: "#fff",
-                  border: "none",
-                  padding: "14px",
-                  borderRadius: 10,
-                  fontSize: 15,
-                  fontWeight: 700,
-                  cursor: "pointer",
+                  margin: "20px 24px", width: "calc(100% - 48px)",
+                  background: "#e22222", color: "#fff", border: "none",
+                  padding: "14px", borderRadius: 10,
+                  fontSize: 15, fontWeight: 700, cursor: "pointer",
                 }}
               >
                 Hire Us
@@ -759,66 +604,6 @@ export function Header() {
     </>
   );
 }
-
-
-// ==================== FLOATING SIDE BUTTONS (EXACT COPY FROM HERO) ====================
-function FloatingSideButtons({ onOpenForm }: { onOpenForm: () => void }) {
-  return (
-    <div style={{ position: "fixed", right: 0, top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: 12, zIndex: 999, alignItems: "flex-end" }}>
-      {/* Chat Button */}
-      <div style={{ position: "relative", width: 50, height: 46, overflow: "visible" }}
-        onMouseEnter={(e) => {
-          const t = e.currentTarget.querySelector(".chat-tooltip") as HTMLElement | null;
-          const b = e.currentTarget.querySelector(".chat-button") as HTMLElement | null;
-          if (t) t.style.transform = "translateX(0)";
-          if (b) b.style.opacity = "0";
-        }}
-        onMouseLeave={(e) => {
-          const t = e.currentTarget.querySelector(".chat-tooltip") as HTMLElement | null;
-          const b = e.currentTarget.querySelector(".chat-button") as HTMLElement | null;
-          if (t) t.style.transform = "translateX(100%)";
-          if (b) b.style.opacity = "1";
-        }}>
-        <button className="chat-button" style={{ background: "#e22222", border: "none", cursor: "pointer", width: 50, height: 46, borderRadius: "40px 0 0 40px", display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", right: 0, top: 0, zIndex: 2, transition: "opacity 0.3s ease-in-out" }}>
-          <FaCommentDots color="#fff" size={20} />
-        </button>
-        <div className="chat-tooltip" style={{ position: "absolute", right: 0, top: 0, height: 46, background: "#e22222", borderRadius: "40px 0 0 40px", display: "flex", alignItems: "center", padding: "0 20px 0 20px", transform: "translateX(100%)", transition: "transform 0.3s ease-in-out", whiteSpace: "nowrap", fontFamily: "'Nunito', sans-serif", fontSize: 14, fontWeight: 700, color: "#fff", zIndex: 1, gap: "8px" }}>
-          <FaCommentDots color="#fff" size={20} />
-          <span>Chat with us</span>
-        </div>
-      </div>
-
-      {/* Phone Button */}
-      <div style={{ position: "relative", width: 50, height: 46, overflow: "visible" }}
-        onMouseEnter={(e) => {
-          const t = e.currentTarget.querySelector(".phone-tooltip") as HTMLElement | null;
-          const b = e.currentTarget.querySelector(".phone-button") as HTMLElement | null;
-          if (t) t.style.transform = "translateX(0)";
-          if (b) b.style.opacity = "0";
-        }}
-        onMouseLeave={(e) => {
-          const t = e.currentTarget.querySelector(".phone-tooltip") as HTMLElement | null;
-          const b = e.currentTarget.querySelector(".phone-button") as HTMLElement | null;
-          if (t) t.style.transform = "translateX(100%)";
-          if (b) b.style.opacity = "1";
-        }}>
-        <button className="phone-button" style={{ background: "#e22222", border: "none", cursor: "pointer", width: 50, height: 46, borderRadius: "40px 0 0 40px", display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", right: 0, top: 0, zIndex: 2, transition: "opacity 0.3s ease-in-out" }}>
-          <FaPhoneAlt color="#fff" size={18} />
-        </button>
-        <div className="phone-tooltip" style={{ position: "absolute", right: 0, top: 0, height: 46, background: "#e22222", borderRadius: "40px 0 0 40px", display: "flex", alignItems: "center", padding: "0 20px 0 20px", transform: "translateX(100%)", transition: "transform 0.3s ease-in-out", whiteSpace: "nowrap", fontFamily: "'Nunito', sans-serif", fontSize: 14, fontWeight: 700, color: "#fff", zIndex: 1, gap: "8px" }}>
-          <FaPhoneAlt color="#fff" size={18} />
-          <span>+1 (800) 123-4567</span>
-        </div>
-      </div>
-
-      {/* Consultancy Button */}
-      <button onClick={onOpenForm} style={{ background: "#e22222", color: "#fff", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 800, letterSpacing: 1, textTransform: "uppercase", width: 50, minHeight: 80, borderRadius: "20px 0 0 20px", fontFamily: "'Nunito', sans-serif", textAlign: "center", writingMode: "vertical-rl", textOrientation: "mixed", padding: "18px 0" }}>
-        GET FREE CONSULTANCY
-      </button>
-    </div>
-  );
-}
-// ==================== PACKAGES HERO (Responsive) ====================
 function PackagesHero() {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
@@ -858,32 +643,25 @@ function PackagesHero() {
       >
         <div
           style={{
-            position: "absolute",
-            inset: 0,
+            position: "absolute", inset: 0,
             backgroundImage: "url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=1600&q=80')",
-            backgroundSize: "cover",
-            backgroundPosition: "center right",
-            opacity: 0.25,
-            zIndex: 0,
+            backgroundSize: "cover", backgroundPosition: "center right",
+            opacity: 0.25, zIndex: 0,
           }}
         />
         <div
           style={{
-            position: "absolute",
-            inset: 0,
+            position: "absolute", inset: 0,
             background: "linear-gradient(100deg, #8b0000 0%, #aa0000 25%, #c00000 45%, rgba(100,0,0,0.75) 65%, rgba(30,10,10,0.4) 100%)",
             zIndex: 1,
           }}
         />
         <div
           style={{
-            maxWidth: 1200,
-            margin: "0 auto",
+            maxWidth: 1200, margin: "0 auto",
             padding: "80px 40px 140px",
-            width: "100%",
-            textAlign: "center",
-            position: "relative",
-            zIndex: 10,
+            width: "100%", textAlign: "center",
+            position: "relative", zIndex: 10,
           }}
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 20 }}>
@@ -894,126 +672,43 @@ function PackagesHero() {
             <span style={{ width: 50, height: 2, background: "rgba(255,255,255,0.6)" }} />
           </div>
 
-          <h1
-            style={{
-              fontSize: "clamp(36px, 5vw, 62px)",
-              fontWeight: 900,
-              color: "#fff",
-              lineHeight: 1.12,
-              marginBottom: 22,
-              letterSpacing: -0.5,
-            }}
-          >
+          <h1 style={{ fontSize: "clamp(36px, 5vw, 62px)", fontWeight: 900, color: "#fff", lineHeight: 1.12, marginBottom: 22, letterSpacing: -0.5 }}>
             Choose Your <span style={{ color: "rgba(255,255,255,0.75)" }}>Perfect Plan</span>
           </h1>
 
-          <p
-            style={{
-              fontSize: 17,
-              color: "rgba(255,255,255,0.85)",
-              lineHeight: 1.75,
-              maxWidth: 620,
-              margin: "0 auto 36px",
-            }}
-          >
+          <p style={{ fontSize: 17, color: "rgba(255,255,255,0.85)", lineHeight: 1.75, maxWidth: 620, margin: "0 auto 36px" }}>
             Transparent pricing with no hidden fees. Pick the package that fits your business needs.
             All packages include dedicated support and 100% satisfaction guarantee.
           </p>
 
           <div className="hero-buttons" style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <button
-              className="pkg-hero-btn-primary"
-              style={{
-                background: "#e22222",
-                color: "#fff",
-                border: "none",
-                padding: "14px 38px",
-                fontWeight: 800,
-                cursor: "pointer",
-                borderRadius: 6,
-                fontSize: 16,
-                fontFamily: "'Nunito', sans-serif",
-                transition: "background 0.3s ease",
-              }}
-            >
+            <button className="pkg-hero-btn-primary" style={{ background: "#e22222", color: "#fff", border: "none", padding: "14px 38px", fontWeight: 800, cursor: "pointer", borderRadius: 6, fontSize: 16, fontFamily: "'Nunito', sans-serif", transition: "background 0.3s ease" }}>
               View All Plans
             </button>
-            <button
-              className="pkg-hero-btn-outline"
-              style={{
-                background: "transparent",
-                color: "#fff",
-                border: "2px solid rgba(255,255,255,0.85)",
-                padding: "12px 34px",
-                fontWeight: 700,
-                cursor: "pointer",
-                borderRadius: 6,
-                fontSize: 16,
-                fontFamily: "'Nunito', sans-serif",
-                transition: "all 0.3s ease",
-              }}
-            >
+            <button className="pkg-hero-btn-outline" style={{ background: "transparent", color: "#fff", border: "2px solid rgba(255,255,255,0.85)", padding: "12px 34px", fontWeight: 700, cursor: "pointer", borderRadius: 6, fontSize: 16, fontFamily: "'Nunito', sans-serif", transition: "all 0.3s ease" }}>
               Talk To Expert
             </button>
           </div>
         </div>
 
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 120,
-            lineHeight: 0,
-            zIndex: 2,
-            overflow: "hidden",
-            pointerEvents: "none",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              width: "200%",
-              height: "100%",
-              animation: "waveMove2 15s linear infinite",
-            }}
-          >
-            <svg viewBox="0 0 2880 120" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "100%" }}>
-              <path d="M0,70 C360,110 720,30 1080,70 C1440,110 1800,30 2160,70 C2520,110 2880,30 3240,70 L3240,120 L0,120 Z" fill="rgba(255,255,255,0.12)" />
-            </svg>
+        {/* Waves — sirf client pe render hongi */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 120, lineHeight: 0, zIndex: 2, overflow: "hidden", pointerEvents: "none" }}>
+            <div style={{ position: "absolute", bottom: 0, left: 0, width: "200%", height: "100%", animation: "waveMove2 15s linear infinite" }}>
+              <svg viewBox="0 0 2880 120" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "100%" }}>
+                <path d="M0,70 C360,110 720,30 1080,70 C1440,110 1800,30 2160,70 C2520,110 2880,30 3240,70 L3240,120 L0,120 Z" fill="rgba(255,255,255,0.12)" />
+              </svg>
+            </div>
+            <div style={{ position: "absolute", bottom: 0, left: 0, width: "200%", height: "100%", animation: "waveMove1 12s linear infinite" }}>
+              <svg viewBox="0 0 2880 120" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "100%" }}>
+                <path d="M0,85 C270,45 540,115 810,80 C1080,45 1350,105 1620,75 C1890,45 2160,100 2430,80 C2700,45 2880,90 2880,85 L2880,120 L0,120 Z" fill="rgba(255,255,255,0.30)" />
+              </svg>
+            </div>
+            <div style={{ position: "absolute", bottom: 0, left: 0, width: "200%", height: "100%", animation: "waveMove3 10s linear infinite" }}>
+              <svg viewBox="0 0 2880 120" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "100%" }}>
+                <path d="M0,95 C240,60 480,120 720,90 C960,60 1200,115 1440,88 C1680,60 1920,112 2160,90 C2400,60 2640,112 2880,95 L2880,120 L0,120 Z" fill="#eef0f7" />
+              </svg>
+            </div>
           </div>
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              width: "200%",
-              height: "100%",
-              animation: "waveMove1 12s linear infinite",
-            }}
-          >
-            <svg viewBox="0 0 2880 120" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "100%" }}>
-              <path d="M0,85 C270,45 540,115 810,80 C1080,45 1350,105 1620,75 C1890,45 2160,100 2430,80 C2700,45 2880,90 2880,85 L2880,120 L0,120 Z" fill="rgba(255,255,255,0.30)" />
-            </svg>
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              width: "200%",
-              height: "100%",
-              animation: "waveMove3 10s linear infinite",
-            }}
-          >
-            <svg viewBox="0 0 2880 120" preserveAspectRatio="none" style={{ display: "block", width: "100%", height: "100%" }}>
-              <path d="M0,95 C240,60 480,120 720,90 C960,60 1200,115 1440,88 C1680,60 1920,112 2160,90 C2400,60 2640,112 2880,95 L2880,120 L0,120 Z" fill="#eef0f7" />
-            </svg>
-          </div>
-        </div>
       </section>
 
       <FloatingSideButtons onOpenForm={() => setIsFormOpen(true)} />
@@ -1021,7 +716,6 @@ function PackagesHero() {
     </>
   );
 }
-
 // ==================== PRICING SECTION (Responsive) ====================
 interface PricingPlan {
   _id: string;
