@@ -1,0 +1,530 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="preload" as="image" href="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&amp;q=80"/><link rel="stylesheet" href="/_next/static/chunks/1canfnq736oax.css" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/39fhi3drzvkg4.js"/><script src="/_next/static/chunks/1lyh9a8una25u.js" async=""></script><script src="/_next/static/chunks/3voxg-gcl3zkw.js" async=""></script><script src="/_next/static/chunks/turbopack-1hai_sx_tr3j0.js" async=""></script><script src="/_next/static/chunks/2-s5oqwq_er23.js" async=""></script><script src="/_next/static/chunks/2t8g_g27wi_9v.js" async=""></script><script src="/_next/static/chunks/14mrh2-p_w84d.js" async=""></script><script src="/_next/static/chunks/1p9nuqq_p46x4.js" async=""></script><script src="/_next/static/chunks/1-cesc5kbn1py.js" async=""></script><script src="/_next/static/chunks/1-y615zizmi5h.js" async=""></script><link rel="icon" href="/favicon.ico?favicon.2vob68tjqpejf.ico" sizes="256x256" type="image/x-icon"/><script src="/_next/static/chunks/0cz1d0mv5g_q7.js" noModule=""></script></head><body style="margin:0;padding-top:70px"><div hidden=""><!--$--><!--/$--></div><style>
+        @keyframes pulse { 0%,100%{opacity:0.3}50%{opacity:0.6} }
+        @keyframes dropdownFadeIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes mobileMenuSlide{from{transform:translateX(100%)}to{transform:translateX(0)}}
+        @keyframes mobileOverlayFade{from{opacity:0}to{opacity:1}}
+        .mobile-menu-open{animation:mobileMenuSlide 0.3s ease forwards !important}
+        .mobile-overlay{animation:mobileOverlayFade 0.3s ease forwards !important}
+        .header-nav-link:hover { color: #e22222 !important; }
+        .desktop-hire-btn {
+          background: #e22222; color: #fff; border: none;
+          flex-shrink: 0; font-family: "Nunito", sans-serif;
+          font-size: 14px; font-weight: 800; padding: 10px 28px;
+          border-radius: 8px; cursor: pointer; position: relative;
+          overflow: hidden; z-index: 1; transition: all 0.3s ease;
+        }
+        .desktop-hire-btn:hover { background: #b71c1c; }
+        .desktop-hire-btn .grey-overlay {
+          position: absolute; top: 0; right: 0; width: 100%; height: 100%;
+          background: #888; transform: scale(0); transform-origin: top right;
+          transition: transform 0.5s ease-in-out; border-radius: 8px;
+          z-index: -1; pointer-events: none;
+        }
+        .desktop-hire-btn:hover .grey-overlay { transform: scale(1); }
+        @media (max-width: 1024px) {
+          .desktop-nav { display: none !important; }
+          .desktop-hire-btn { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+          header > div { padding: 0 20px !important; }
+          header { height: 70px !important; }
+        }
+        @media (min-width: 1025px) {
+          .mobile-menu-btn { display: none !important; }
+          .mobile-menu-container { display: none !important; }
+        }
+      </style><header style="position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(18,4,4,0.85);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,0.07);height:70px;transition:all 0.3s ease;font-family:&#x27;Nunito&#x27;, sans-serif"><div style="max-width:1400px;margin:0 auto;padding:0 36px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px"><a style="text-decoration:none;display:flex;align-items:center;gap:10px;flex-shrink:0" href="/"><div style="width:50px;height:50px;background:rgba(255,255,255,0.1);border-radius:8px;animation:pulse 1.5s ease-in-out infinite"></div></a><nav class="desktop-nav" style="background:rgba(255,255,255,0.055);border:1px solid rgba(255,255,255,0.1);border-radius:50px;padding:5px 8px;display:flex;align-items:center;gap:2px"><a class="header-nav-link" style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.75);text-decoration:none;padding:8px 18px;border-radius:25px;background:transparent;transition:all 0.3s ease;display:inline-block" href="/">Home</a><div style="position:relative"><button style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.75);text-decoration:none;padding:8px 18px;border-radius:25px;background:transparent;transition:all 0.3s ease;display:flex;border:none;cursor:pointer;font-family:inherit;align-items:center;gap:5px;white-space:nowrap">Services<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></button></div><a class="header-nav-link" style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.75);text-decoration:none;padding:8px 18px;border-radius:25px;background:transparent;transition:all 0.3s ease;display:inline-block" href="/portfolio/">Portfolio</a><a class="header-nav-link" style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.75);text-decoration:none;padding:8px 18px;border-radius:25px;background:transparent;transition:all 0.3s ease;display:inline-block" href="/packages/">Packages</a><a class="header-nav-link" style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.75);text-decoration:none;padding:8px 18px;border-radius:25px;background:transparent;transition:all 0.3s ease;display:inline-block" href="/combo-packages/">Combo Packages</a><a class="" style="position:relative;font-size:13px;font-weight:600;color:#ffffff;text-decoration:none;padding:8px 18px;border-radius:25px;background:#e22222;box-shadow:0 4px 15px rgba(226, 34, 34, 0.4);transition:all 0.3s ease;display:inline-block" href="/blog/">Blog<span style="position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid #e22222"></span></a><a class="header-nav-link" style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.75);text-decoration:none;padding:8px 18px;border-radius:25px;background:transparent;transition:all 0.3s ease;display:inline-block" href="/testimonials/">Testimonials</a></nav><button class="desktop-hire-btn">Hire Us<span class="grey-overlay" aria-hidden="true"></span></button><button class="mobile-menu-btn" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);cursor:pointer;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button></div></header><style>
+        @keyframes waveMove1 { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        @keyframes waveMove2 { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
+        @keyframes waveMove3 { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .blog-hero-btn-primary:hover { background: #b71c1c !important; }
+        .blog-hero-btn-outline:hover { background: rgba(255,255,255,0.15) !important; }
+        .blog-hero-container { padding: 30px 40px 140px !important; }
+        @media (max-width: 768px) {
+          .blog-hero-section { padding-top: 0 !important; }
+          .blog-hero-container { padding: 10px 20px 100px !important; text-align: center !important; }
+          .blog-hero-container h1 { font-size: 32px !important; }
+          .blog-hero-container p { font-size: 15px !important; padding: 0 15px !important; margin-left: auto !important; margin-right: auto !important; }
+          .hero-buttons { flex-direction: column !important; align-items: center !important; gap: 12px !important; }
+          .hero-buttons button { width: 100% !important; max-width: 250px !important; justify-content: center !important; }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .blog-hero-container { padding: 20px 30px 100px !important; text-align: center !important; }
+          .blog-hero-container h1 { font-size: 42px !important; }
+        }
+      </style><section class="blog-hero-section" style="padding-top:70px;min-height:60vh;position:relative;overflow:hidden;display:flex;align-items:center;font-family:&#x27;Nunito&#x27;, sans-serif;background:#8b0000"><div style="position:absolute;inset:0;background-image:url(&#x27;https://images.unsplash.com/photo-1551434678-e076c223a692?w=1600&amp;q=80&#x27;);background-size:cover;background-position:center right;opacity:0.25;z-index:0"></div><div style="position:absolute;inset:0;background:linear-gradient(100deg, #8b0000 0%, #aa0000 25%, #c00000 45%, rgba(100,0,0,0.75) 65%, rgba(30,10,10,0.4) 100%);z-index:1"></div><div class="blog-hero-container" style="max-width:1200px;margin:0 auto;width:100%;text-align:center;position:relative;z-index:10"><div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:20px"><span style="width:50px;height:2px;background:rgba(255,255,255,0.6)"></span><span style="font-size:13px;font-weight:700;letter-spacing:4px;color:rgba(255,255,255,0.85);text-transform:uppercase">Blog</span><span style="width:50px;height:2px;background:rgba(255,255,255,0.6)"></span></div><h1 style="font-size:clamp(36px, 5vw, 62px);font-weight:900;color:#fff;line-height:1.12;margin-bottom:22px;letter-spacing:-0.5px">Why Every Business Needs a Strong<!-- --> <span style="color:rgba(255,255,255,0.75)">Online Presence in 2026</span></h1><p style="font-size:17px;color:rgba(255,255,255,0.85);line-height:1.75;max-width:620px;margin:0 auto 36px">By 360 Art Design</p></div><div style="position:absolute;bottom:0;left:0;right:0;height:280px;line-height:0;z-index:2;overflow:hidden;pointer-events:none"><div style="position:absolute;bottom:0;left:0;width:200%;height:100%;animation:waveMove2 15s linear infinite"><svg viewBox="0 0 2880 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:100%"><path d="M0,70 C360,110 720,30 1080,70 C1440,110 1800,30 2160,70 C2520,110 2880,30 3240,70 L3240,120 L0,120 Z" fill="rgba(255,255,255,0.12)"></path></svg></div><div style="position:absolute;bottom:0;left:0;width:200%;height:100%;animation:waveMove1 12s linear infinite"><svg viewBox="0 0 2880 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:100%"><path d="M0,85 C270,45 540,115 810,80 C1080,45 1350,105 1620,75 C1890,45 2160,100 2430,80 C2700,45 2880,90 2880,85 L2880,120 L0,120 Z" fill="rgba(255,255,255,0.30)"></path></svg></div><div style="position:absolute;bottom:0;left:0;width:200%;height:100%;animation:waveMove3 10s linear infinite"><svg viewBox="0 0 2880 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" style="display:block;width:100%;height:100%"><path d="M0,95 C240,60 480,120 720,90 C960,60 1200,115 1440,88 C1680,60 1920,112 2160,90 C2400,60 2640,112 2880,95 L2880,120 L0,120 Z" fill="#f3f4f8"></path></svg></div></div></section><section style="background:#f7f7f5;padding:64px 24px 96px;font-family:&#x27;Georgia&#x27;, &#x27;Times New Roman&#x27;, serif"><style>
+        /* ── Layout ── */
+        .blog-layout {
+          max-width: 1180px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1fr 308px;
+          gap: 52px;
+          align-items: start;
+        }
+
+        /* ── Article Shell ── */
+        .article-shell {
+          background: #ffffff;
+          border: 1px solid #e8e4df;
+        }
+
+        .article-cover {
+          width: 100%;
+          height: 400px;
+          object-fit: cover;
+          display: block;
+        }
+
+        /* ── Breadcrumb bar ── */
+        .article-breadcrumb {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          padding: 14px 48px;
+          border-bottom: 1px solid #ede9e4;
+          font-family: 'Nunito', sans-serif;
+          font-size: 12px;
+          color: #9ca3af;
+          letter-spacing: 0.3px;
+        }
+        .bc-sep { color: #d1cdc8; }
+        .bc-current { color: #374151; font-weight: 600; }
+
+        /* ── Kicker + Title area ── */
+        .article-header {
+          padding: 44px 48px 32px;
+          border-bottom: 1px solid #ede9e4;
+        }
+        .article-kicker {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-bottom: 20px;
+        }
+        .kicker-line { width: 32px; height: 2px; background: #c0392b; flex-shrink: 0; }
+        .kicker-label {
+          font-family: 'Nunito', sans-serif;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 3px;
+          color: #c0392b;
+          text-transform: uppercase;
+        }
+        .article-title {
+          font-size: clamp(26px, 3.5vw, 38px);
+          font-weight: 700;
+          color: #0f0f0f;
+          line-height: 1.22;
+          letter-spacing: -0.3px;
+          margin: 0 0 20px;
+        }
+        .article-subtitle {
+          font-size: 17px;
+          color: #6b7280;
+          line-height: 1.65;
+          font-style: italic;
+          margin: 0 0 24px;
+          font-family: 'Georgia', serif;
+        }
+        .article-meta-row {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          flex-wrap: wrap;
+        }
+        .meta-chip {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-family: 'Nunito', sans-serif;
+          font-size: 12.5px;
+          color: #6b7280;
+          padding-right: 18px;
+          margin-right: 18px;
+          border-right: 1px solid #e0dbd5;
+        }
+        .meta-chip:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+        .meta-chip svg { color: #c0392b; flex-shrink: 0; }
+        .meta-chip strong { color: #374151; }
+
+        /* ── Tags row ── */
+        .article-tags-row {
+          padding: 18px 48px;
+          border-bottom: 1px solid #ede9e4;
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+          background: #fdfcfb;
+        }
+        .a-tag {
+          font-family: 'Nunito', sans-serif;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.8px;
+          text-transform: uppercase;
+          padding: 5px 13px;
+          border-radius: 3px;
+        }
+        .a-tag-red { background: #fff0f0; color: #c0392b; border: 1px solid #f8d0d0; }
+        .a-tag-gray { background: #f3f4f6; color: #6b7280; border: 1px solid #e5e7eb; }
+
+        /* ── Body ── */
+        .article-body {
+          padding: 44px 48px 56px;
+        }
+
+        /* drop-cap lead paragraph */
+        .article-lead {
+          font-size: 17.5px;
+          color: #1f2937;
+          line-height: 1.9;
+          margin-bottom: 36px;
+          padding: 22px 26px;
+          background: #fff8f8;
+          border-left: 3px solid #c0392b;
+          font-style: italic;
+        }
+
+        .article-h2 {
+          font-size: 22px;
+          font-weight: 700;
+          color: #0f0f0f;
+          margin: 44px 0 14px;
+          letter-spacing: -0.2px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid #ede9e4;
+        }
+        .article-h2:first-of-type { margin-top: 0; }
+
+        .article-h3 {
+          font-family: 'Nunito', sans-serif;
+          font-size: 15px;
+          font-weight: 800;
+          color: #c0392b;
+          text-transform: uppercase;
+          letter-spacing: 1.5px;
+          margin: 30px 0 10px;
+        }
+
+        .article-p {
+          font-size: 16px;
+          color: #374151;
+          line-height: 1.9;
+          margin-bottom: 18px;
+          font-family: 'Georgia', serif;
+        }
+
+        /* Pull quote */
+        .pull-quote {
+          margin: 36px 0;
+          padding: 28px 32px;
+          border-left: 4px solid #c0392b;
+          background: #fdfcfb;
+          border-top: 1px solid #ede9e4;
+          border-bottom: 1px solid #ede9e4;
+        }
+        .pull-quote p {
+          font-size: 20px;
+          font-style: italic;
+          color: #1f2937;
+          line-height: 1.55;
+          margin: 0 0 10px;
+        }
+        .pull-quote cite {
+          font-family: 'Nunito', sans-serif;
+          font-size: 12px;
+          color: #9ca3af;
+          font-style: normal;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+
+        /* Bullet list */
+        .article-ul {
+          list-style: none;
+          padding: 0;
+          margin: 0 0 28px;
+          border: 1px solid #ede9e4;
+          border-radius: 4px;
+          overflow: hidden;
+        }
+        .article-ul li {
+          font-family: 'Nunito', sans-serif;
+          font-size: 14.5px;
+          color: #374151;
+          line-height: 1.65;
+          padding: 12px 18px 12px 42px;
+          position: relative;
+          border-bottom: 1px solid #ede9e4;
+          background: #fff;
+        }
+        .article-ul li:last-child { border-bottom: none; }
+        .article-ul li:nth-child(even) { background: #fdfcfb; }
+        .article-ul li::before {
+          content: "";
+          position: absolute;
+          left: 18px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #c0392b;
+        }
+
+        /* Services cards */
+        .services-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+          margin: 24px 0 32px;
+        }
+        .service-card {
+          background: #fdfcfb;
+          border: 1px solid #ede9e4;
+          border-radius: 4px;
+          padding: 18px 20px;
+          transition: border-color 0.2s, background 0.2s;
+        }
+        .service-card:hover { border-color: #c0392b; background: #fff8f8; }
+        .service-icon { font-size: 22px; margin-bottom: 10px; }
+        .service-title {
+          font-family: 'Nunito', sans-serif;
+          font-size: 13px;
+          font-weight: 800;
+          color: #111827;
+          margin-bottom: 5px;
+        }
+        .service-desc {
+          font-family: 'Nunito', sans-serif;
+          font-size: 12px;
+          color: #6b7280;
+          line-height: 1.6;
+        }
+
+        /* Industry pills */
+        .industries-wrap { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+        .industry-pill {
+          font-family: 'Nunito', sans-serif;
+          background: #f3f4f6;
+          border: 1px solid #e5e7eb;
+          color: #374151;
+          font-size: 12.5px;
+          padding: 6px 15px;
+          border-radius: 3px;
+          font-weight: 600;
+          transition: all 0.2s;
+          cursor: default;
+        }
+        .industry-pill:hover { background: #fff0f0; border-color: #f5c6c6; color: #c0392b; }
+
+        /* Article footer / share */
+        .article-footer {
+          padding: 28px 48px;
+          border-top: 1px solid #ede9e4;
+          background: #fdfcfb;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+        .share-label {
+          font-family: 'Nunito', sans-serif;
+          font-size: 12px;
+          font-weight: 800;
+          letter-spacing: 2px;
+          color: #9ca3af;
+          text-transform: uppercase;
+        }
+        .share-btns { display: flex; gap: 8px; }
+        .share-btn {
+          font-family: 'Nunito', sans-serif;
+          font-size: 12px;
+          font-weight: 700;
+          padding: 7px 16px;
+          border-radius: 3px;
+          border: 1px solid #e5e7eb;
+          background: #fff;
+          color: #374151;
+          cursor: pointer;
+          letter-spacing: 0.5px;
+          transition: all 0.18s;
+        }
+        .share-btn:hover { border-color: #c0392b; color: #c0392b; background: #fff8f8; }
+        .article-read-more {
+          font-family: 'Nunito', sans-serif;
+          font-size: 13px;
+          font-weight: 700;
+          color: #c0392b;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          cursor: pointer;
+          text-decoration: none;
+          letter-spacing: 0.3px;
+        }
+        .article-read-more:hover { text-decoration: underline; }
+
+        /* ── SIDEBAR ── */
+        .blog-sidebar {
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+          border: 1px solid #e8e4df;
+          background: #fff;
+          position: sticky;
+          top: 24px;
+          overflow: hidden;
+        }
+
+        .sw {
+          padding: 24px 24px 20px;
+          border-bottom: 1px solid #ede9e4;
+        }
+        .sw:last-child { border-bottom: none; }
+
+        .sw-title {
+          font-family: 'Nunito', sans-serif;
+          font-size: 10px;
+          font-weight: 900;
+          letter-spacing: 3px;
+          color: #9ca3af;
+          text-transform: uppercase;
+          margin-bottom: 18px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .sw-title::after {
+          content: '';
+          flex: 1;
+          height: 1px;
+          background: #ede9e4;
+        }
+
+        /* Author */
+        .author-row { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+        .author-avatar {
+          width: 44px; height: 44px; border-radius: 4px;
+          background: linear-gradient(135deg, #e22222, #8b0000);
+          display: flex; align-items: center; justify-content: center;
+          color: #fff; font-weight: 900; font-size: 14px;
+          font-family: 'Nunito', sans-serif;
+          flex-shrink: 0;
+        }
+        .author-name {
+          font-family: 'Nunito', sans-serif;
+          font-weight: 800; color: #111827; font-size: 14px;
+        }
+        .author-role {
+          font-family: 'Nunito', sans-serif;
+          font-size: 11px; color: #9ca3af; margin-top: 2px; letter-spacing: 0.5px;
+        }
+        .author-bio {
+          font-family: 'Nunito', sans-serif;
+          font-size: 12.5px; color: #6b7280; line-height: 1.65;
+        }
+
+        /* Categories */
+        .cat-item {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 9px 0; border-bottom: 1px solid #f3f4f6;
+          cursor: pointer; font-family: 'Nunito', sans-serif;
+        }
+        .cat-item:last-child { border-bottom: none; }
+        .cat-item:hover .cat-label { color: #c0392b; }
+        .cat-label { font-size: 13px; color: #374151; font-weight: 600; transition: color 0.2s; }
+        .cat-count {
+          font-size: 10px; color: #fff; background: #c0392b;
+          border-radius: 2px; padding: 2px 7px; font-weight: 800;
+          font-family: 'Nunito', sans-serif;
+        }
+
+        /* Recent Posts */
+        .recent-item {
+          display: flex; gap: 12px; padding: 12px 0;
+          border-bottom: 1px solid #f3f4f6; align-items: flex-start;
+        }
+        .recent-item:last-child { border-bottom: none; }
+        .recent-num {
+          font-family: 'Nunito', sans-serif;
+          font-size: 11px; font-weight: 900; color: #d1cdc8;
+          letter-spacing: 0.5px; width: 20px; flex-shrink: 0; margin-top: 2px;
+        }
+        .recent-title {
+          font-family: 'Nunito', sans-serif;
+          font-size: 13px; color: #374151; font-weight: 600;
+          line-height: 1.5; cursor: pointer; transition: color 0.18s;
+        }
+        .recent-title:hover { color: #c0392b; }
+        .recent-date {
+          font-family: 'Nunito', sans-serif;
+          font-size: 11px; color: #9ca3af; margin-top: 4px; letter-spacing: 0.3px;
+        }
+
+        /* Newsletter */
+        .sub-widget { background: #0f0f0f !important; }
+        .sub-widget .sw-title { color: rgba(255,255,255,0.45) !important; }
+        .sub-widget .sw-title::after { background: rgba(255,255,255,0.1) !important; }
+        .sub-head {
+          font-family: 'Nunito', sans-serif;
+          font-size: 16px; font-weight: 900; color: #fff; margin-bottom: 8px;
+        }
+        .sub-desc {
+          font-family: 'Nunito', sans-serif;
+          font-size: 12.5px; color: rgba(255,255,255,0.6);
+          line-height: 1.6; margin-bottom: 16px;
+        }
+        .sub-input {
+          width: 100%; padding: 11px 14px; border-radius: 3px;
+          border: 1px solid rgba(255,255,255,0.15);
+          font-size: 13px; outline: none; margin-bottom: 10px;
+          background: rgba(255,255,255,0.08); color: #fff;
+          font-family: 'Nunito', sans-serif;
+          box-sizing: border-box;
+          transition: border-color 0.2s;
+        }
+        .sub-input::placeholder { color: rgba(255,255,255,0.35); }
+        .sub-input:focus { border-color: #c0392b; }
+        .sub-btn {
+          width: 100%; background: #c0392b; color: #fff;
+          border: none; padding: 12px;
+          border-radius: 3px; font-size: 12px; font-weight: 800;
+          cursor: pointer; font-family: 'Nunito', sans-serif;
+          letter-spacing: 2px; text-transform: uppercase;
+          transition: background 0.2s;
+        }
+        .sub-btn:hover { background: #a53226; }
+
+        /* ── Responsive ── */
+        @media (max-width: 1024px) {
+          .blog-layout { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .blog-sidebar { position: static !important; }
+          .services-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+          .article-header { padding: 28px 24px 24px !important; }
+          .article-tags-row { padding: 14px 24px !important; }
+          .article-breadcrumb { padding: 12px 24px !important; }
+          .article-body { padding: 28px 24px 40px !important; }
+          .article-footer { padding: 20px 24px !important; }
+          .article-cover { height: 220px !important; }
+          .services-grid { grid-template-columns: 1fr !important; }
+          .article-title { font-size: 24px !important; }
+        }
+      </style><div class="blog-layout"><article class="article-shell"><img class="article-cover" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&amp;q=80" alt="Why Every Business Needs a Strong Online Presence in 2026"/><div class="article-breadcrumb"><span>Home</span><span class="bc-sep">›</span><span>Blog</span><span class="bc-sep">›</span><span class="bc-current">Why Every Business</span></div><div class="article-header"><div class="article-kicker"><span class="kicker-line"></span><span class="kicker-label">Digital Marketing · Business Growth</span></div><h1 class="article-title">Why Every Business Needs a Strong Online Presence in 2026</h1><p class="article-subtitle">Your customers are searching for you before they ever walk through your door — are they finding you, or your competitor?</p><div class="article-meta-row"><span class="meta-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><strong>360 Art Design</strong></span><span class="meta-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>January 15, 2026</span><span class="meta-chip"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>8 min read</span></div></div><div class="article-tags-row"><span class="a-tag a-tag-red">Digital Marketing</span><span class="a-tag a-tag-red">Business Growth</span><span class="a-tag a-tag-gray">SEO</span><span class="a-tag a-tag-gray">Online Presence</span></div><div class="article-body"><p class="article-lead">In today&#x27;s digital world, having a great product or service is no longer enough. Your customers are searching for you online before making a purchase — if your business isn&#x27;t visible, you&#x27;re losing opportunities to competitors who are.</p><h2 class="article-h2">What is an Online Presence?</h2><p class="article-p">An online presence is how your business appears across the internet. It includes your website, social profiles, search rankings, and customer reviews — together these create a digital identity that helps customers discover and trust your brand.</p><ul class="article-ul"><li>Professional Website</li><li>Google Business Profile</li><li>Facebook &amp; Instagram Pages</li><li>LinkedIn Business Profile</li><li>Search Engine Optimization (SEO)</li><li>Online Advertising</li><li>Customer Reviews</li><li>Business Applications and Automation</li></ul><h2 class="article-h2">Why Your Business Needs to Be Online</h2><h3 class="article-h3">Your customers are already searching</h3><p class="article-p">Before buying anything, most people research online first. If they can&#x27;t find your business, they&#x27;ll choose a competitor they can. Being discoverable is no longer optional — it&#x27;s the minimum entry point for growth in 2026.</p><div class="pull-quote"><p>“If your business isn&#x27;t on the first page of Google, you&#x27;re invisible to 90% of potential customers.”</p><cite>— Digital Marketing Research, 2025</cite></div></div><div class="article-footer"><div><div class="share-label" style="margin-bottom:10px">Share this article</div><div class="share-btns"><button class="share-btn">Facebook</button><button class="share-btn">Copy Link</button></div></div><a class="article-read-more">More Articles <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" height="11" width="11" xmlns="http://www.w3.org/2000/svg"><path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"></path></svg></a></div></article><aside class="blog-sidebar"><div class="sw"><div class="sw-title">About the Author</div><div class="author-row"><div class="author-avatar">360</div><div><div class="author-name">360 Art Design</div><div class="author-role">Digital Agency · Karachi</div></div></div><p class="author-bio">A creative digital agency focused on crafting stunning websites, powerful brands, and growth-driven marketing strategies for businesses across Pakistan.</p></div><div class="sw"><div class="sw-title">Categories</div><div class="cat-item"><span class="cat-label">Digital Marketing</span><span class="cat-count">12</span></div><div class="cat-item"><span class="cat-label">Web Development</span><span class="cat-count">8</span></div><div class="cat-item"><span class="cat-label">SEO Tips</span><span class="cat-count">6</span></div><div class="cat-item"><span class="cat-label">Social Media</span><span class="cat-count">9</span></div><div class="cat-item"><span class="cat-label">Business Tips</span><span class="cat-count">5</span></div></div><div class="sw"><div class="sw-title">Recent Posts</div><div class="recent-item"><div class="recent-num">01</div><div><div class="recent-title">Why Every Business Needs a Strong Online Presence</div><div class="recent-date">Jan 15, 2026</div></div></div><div class="recent-item"><div class="recent-num">02</div><div><div class="recent-title">10 Tips for Effective SEO in 2026</div><div class="recent-date">Dec 28, 2025</div></div></div><div class="recent-item"><div class="recent-num">03</div><div><div class="recent-title">The Power of Social Media Marketing</div><div class="recent-date">Dec 10, 2025</div></div></div><div class="recent-item"><div class="recent-num">04</div><div><div class="recent-title">Web Design Trends to Watch in 2026</div><div class="recent-date">Nov 22, 2025</div></div></div></div></aside></div></section><section style="background:#fff;padding:90px 40px 100px;font-family:&#x27;Nunito&#x27;,sans-serif;border-top:1px solid #f0f0f0"><div style="max-width:1200px;margin:0 auto"><div style="display:flex;align-items:center;gap:14px;margin-bottom:18px"><div style="width:60px;height:2px;background:linear-gradient(to right, transparent, #e22222)"></div><span style="font-size:13px;font-weight:800;letter-spacing:3.5px;color:#e22222;text-transform:uppercase">WHAT WE OFFER</span></div><h2 style="font-size:clamp(28px,4vw,44px);font-weight:900;color:#111827;line-height:1.2;margin:0 0 8px">Our <span style="color:#e22222">Shopify Services</span></h2><p style="font-size:17px;color:#6b7280;max-width:580px;line-height:1.75;margin:0 0 16px">Full-stack Shopify solutions tailored to get your store live and selling</p><div style="width:60px;height:3px;background:#e22222;margin-bottom:56px;border-radius:2px"></div><style>.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;background:rgba(0,0,0,0.06);}@media(max-width:640px){.svc-grid{grid-template-columns:1fr;}}</style><div class="svc-grid"><div style="padding:36px 32px;border-left:3px solid rgba(139,0,0,0.2);background:#fff;transition:all 0.25s ease;opacity:0;transform:translateY(36px);transition-duration:0.6s;transition-delay:0s;cursor:pointer"><div style="margin-bottom:20px;transition:transform 0.35s ease;transform:scale(1) translateY(0);display:inline-block"><svg width="130" height="100" viewBox="0 0 130 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="8" width="110" height="72" rx="4" fill="#e8e8e8" stroke="#bbb" stroke-width="2"></rect><rect x="15" y="13" width="100" height="62" rx="2" fill="#fff"></rect><rect x="15" y="13" width="100" height="10" rx="2" fill="#ddd"></rect><circle cx="22" cy="18" r="2.5" fill="#e22222"></circle><circle cx="30" cy="18" r="2.5" fill="#f0a500"></circle><circle cx="38" cy="18" r="2.5" fill="#4caf50"></circle><rect x="20" y="28" width="60" height="5" rx="2" fill="#e0e0e0"></rect><rect x="20" y="37" width="90" height="3" rx="1.5" fill="#eeeeee"></rect><rect x="20" y="43" width="80" height="3" rx="1.5" fill="#eeeeee"></rect><rect x="20" y="49" width="70" height="3" rx="1.5" fill="#eeeeee"></rect><rect x="15" y="23" width="18" height="52" rx="0" fill="#f5f5f5"></rect><rect x="18" y="28" width="12" height="3" rx="1" fill="#ddd"></rect><rect x="18" y="34" width="12" height="3" rx="1" fill="#ddd"></rect><rect x="18" y="40" width="12" height="3" rx="1" fill="#ddd"></rect><rect x="18" y="46" width="12" height="3" rx="1" fill="#8b0000" opacity="0.5"></rect><path d="M5 82 L125 82 L118 92 L12 92 Z" fill="#d0d0d0"></path><rect x="40" y="80" width="50" height="4" rx="1" fill="#bbb"></rect></svg></div><span style="font-size:20px;font-weight:900;color:#111827;text-transform:uppercase;letter-spacing:1.5px;display:block;margin-bottom:14px;transition:color 0.2s">Store Themes &amp; Customization</span><p style="font-size:16px;color:#6b7280;line-height:1.8;margin:0">Already have a theme picked out for your new store? Or need some helping selecting the best theme for your product catalog? We are here to help you pick and customize the perfect theme for your online presence.</p></div><div style="padding:36px 32px;border-left:3px solid rgba(139,0,0,0.2);background:#fff;transition:all 0.25s ease;opacity:0;transform:translateY(36px);transition-duration:0.6s;transition-delay:0.1s;cursor:pointer"><div style="margin-bottom:20px;transition:transform 0.35s ease;transform:scale(1) translateY(0);display:inline-block"><svg width="130" height="100" viewBox="0 0 130 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="36" height="36" rx="8" fill="url(#ig)"></rect><defs><linearGradient id="ig" x1="5" y1="5" x2="41" y2="41"><stop offset="0%" stop-color="#f09433"></stop><stop offset="50%" stop-color="#e6683c"></stop><stop offset="100%" stop-color="#bc1888"></stop></linearGradient></defs><rect x="14" y="14" width="18" height="18" rx="5" stroke="#fff" stroke-width="2" fill="none"></rect><circle cx="23" cy="23" r="5" stroke="#fff" stroke-width="1.8" fill="none"></circle><circle cx="30.5" cy="15.5" r="1.5" fill="#fff"></circle><rect x="47" y="5" width="36" height="36" rx="8" fill="#1877f2"></rect><text x="65" y="28" text-anchor="middle" fill="#fff" font-size="20" font-weight="900" font-family="Arial">f</text><rect x="89" y="5" width="36" height="36" rx="8" fill="#8b0000"></rect><text x="107" y="28" text-anchor="middle" fill="#fff" font-size="14" font-weight="700" font-family="Arial">A</text><rect x="5" y="47" width="36" height="36" rx="8" fill="#e8e8e8"></rect><path d="M18 58 L20 56 Q23 53 26 56 L28 58" stroke="#555" stroke-width="1.5" fill="none"></path><path d="M16 58 L16 74 L30 74 L30 58 Z" fill="#bbb"></path><text x="23" y="70" text-anchor="middle" fill="#555" font-size="9" font-weight="700">S</text><rect x="47" y="47" width="36" height="36" rx="8" fill="#96bf48"></rect><path d="M60 58 Q65 52 70 58 L72 74 L58 74 Z" fill="#fff" opacity="0.9"></path><text x="65" y="70" text-anchor="middle" fill="#5a7a1a" font-size="10" font-weight="900">S</text><rect x="89" y="47" width="36" height="36" rx="8" fill="#1a1a2e"></rect><text x="107" y="66" text-anchor="middle" fill="#fff" font-size="8" font-weight="700" font-family="Arial">ELEV</text><text x="107" y="75" text-anchor="middle" fill="#e22222" font-size="8" font-weight="700" font-family="Arial">AR</text></svg></div><span style="font-size:20px;font-weight:900;color:#111827;text-transform:uppercase;letter-spacing:1.5px;display:block;margin-bottom:14px;transition:color 0.2s">App Installation &amp; Configuration</span><p style="font-size:16px;color:#6b7280;line-height:1.8;margin:0">Add features and functionality to your store with the addition of Shopify apps. With thousands of apps to choose from, we will help upload and configure the best apps to your Shopify store.</p></div><div style="padding:36px 32px;border-left:3px solid rgba(139,0,0,0.2);background:#fff;transition:all 0.25s ease;opacity:0;transform:translateY(36px);transition-duration:0.6s;transition-delay:0.2s;cursor:pointer"><div style="margin-bottom:20px;transition:transform 0.35s ease;transform:scale(1) translateY(0);display:inline-block"><svg width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="30" y="10" width="52" height="88" rx="8" fill="#e0e0e0" stroke="#bbb" stroke-width="1.5"></rect><rect x="34" y="16" width="44" height="76" rx="4" fill="#f5f5f5"></rect><rect x="38" y="50" width="8" height="20" rx="2" fill="#ccc"></rect><rect x="50" y="40" width="8" height="30" rx="2" fill="#8b0000" opacity="0.5"></rect><rect x="62" y="45" width="8" height="25" rx="2" fill="#ccc"></rect><rect x="8" y="25" width="50" height="82" rx="8" fill="#fff" stroke="#bbb" stroke-width="1.5"></rect><rect x="12" y="31" width="42" height="70" rx="4" fill="#fafafa"></rect><rect x="24" y="28" width="16" height="4" rx="2" fill="#ddd"></rect><rect x="16" y="36" width="34" height="4" rx="2" fill="#e22222" opacity="0.7"></rect><rect x="16" y="44" width="30" height="3" rx="1.5" fill="#eee"></rect><rect x="16" y="50" width="26" height="3" rx="1.5" fill="#eee"></rect><rect x="16" y="62" width="7" height="18" rx="2" fill="#ddd"></rect><rect x="26" y="55" width="7" height="25" rx="2" fill="#8b0000" opacity="0.6"></rect><rect x="36" y="60" width="7" height="20" rx="2" fill="#ddd"></rect><rect x="46" y="58" width="7" height="22" rx="2" fill="#e22222" opacity="0.5"></rect><rect x="25" y="96" width="16" height="3" rx="1.5" fill="#ccc"></rect></svg></div><span style="font-size:20px;font-weight:900;color:#111827;text-transform:uppercase;letter-spacing:1.5px;display:block;margin-bottom:14px;transition:color 0.2s">Store Optimization</span><p style="font-size:16px;color:#6b7280;line-height:1.8;margin:0">Ensure your theme and store are ready for online with our Store Optimization services. Our team will review the SEO and keywords on your new site to make sure that your website stands out online.</p></div><div style="padding:36px 32px;border-left:3px solid rgba(139,0,0,0.2);background:#fff;transition:all 0.25s ease;opacity:0;transform:translateY(36px);transition-duration:0.6s;transition-delay:0.30000000000000004s;cursor:pointer"><div style="margin-bottom:20px;transition:transform 0.35s ease;transform:scale(1) translateY(0);display:inline-block"><svg width="90" height="120" viewBox="0 0 90 120" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="10" y="5" width="70" height="110" rx="12" fill="#1a1a1a"></rect><rect x="14" y="10" width="62" height="100" rx="8" fill="#fff"></rect><rect x="30" y="7" width="30" height="6" rx="3" fill="#333"></rect><rect x="18" y="14" width="20" height="3" rx="1" fill="#eee"></rect><rect x="52" y="14" width="20" height="3" rx="1" fill="#eee"></rect><rect x="14" y="20" width="62" height="14" fill="#8b0000"></rect><rect x="18" y="24" width="30" height="4" rx="2" fill="rgba(255,255,255,0.6)"></rect><rect x="18" y="40" width="54" height="16" rx="3" fill="#f5f5f5"></rect><rect x="21" y="44" width="25" height="3" rx="1" fill="#ddd"></rect><rect x="21" y="49" width="15" height="3" rx="1" fill="#eee"></rect><rect x="60" y="42" width="10" height="10" rx="2" fill="#8b0000" opacity="0.6"></rect><rect x="18" y="62" width="54" height="12" rx="3" fill="#f5f5f5"></rect><rect x="21" y="65" width="20" height="3" rx="1" fill="#ddd"></rect><rect x="21" y="70" width="14" height="2" rx="1" fill="#eee"></rect><rect x="18" y="78" width="54" height="12" rx="3" fill="#f5f5f5"></rect><rect x="21" y="81" width="20" height="3" rx="1" fill="#ddd"></rect><rect x="21" y="86" width="14" height="2" rx="1" fill="#eee"></rect><rect x="18" y="96" width="54" height="10" rx="4" fill="#8b0000"></rect><rect x="30" y="99" width="30" height="4" rx="2" fill="rgba(255,255,255,0.5)"></rect><rect x="32" y="108" width="26" height="3" rx="1.5" fill="#555"></rect></svg></div><span style="font-size:20px;font-weight:900;color:#111827;text-transform:uppercase;letter-spacing:1.5px;display:block;margin-bottom:14px;transition:color 0.2s">Store Configuration</span><p style="font-size:16px;color:#6b7280;line-height:1.8;margin:0">Orders, Shipping and Payments just got easier with our Shopify Store Configuration. We take care of setting up your store settings so you don&#x27;t have to. Working closely with you, we will set up your shipping, payments, and more.</p></div></div></div></section><footer style="background:#0a0a0a;color:#fff;font-family:&#x27;Inter&#x27;, &#x27;Nunito&#x27;, sans-serif;position:relative"><style>
+        @keyframes pulse { 0%,100%{opacity:0.3}50%{opacity:0.6} }
+        @media (max-width: 768px) {
+          .footer-container { padding: 50px 20px 40px !important; }
+          .newsletter-box { flex-direction: column !important; text-align: center !important; padding: 30px 20px !important; margin-bottom: 40px !important; }
+          .footer-grid { grid-template-columns: 1fr !important; gap: 40px !important; text-align: center !important; }
+          .footer-bottom { flex-direction: column !important; text-align: center !important; gap: 15px !important; }
+          .footer-social { justify-content: center !important; }
+          .footer-logo { justify-content: center !important; }
+        }
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .footer-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 40px !important; }
+          .newsletter-box { flex-direction: column !important; text-align: center !important; gap: 20px !important; }
+        }
+      </style><div style="height:3px;background:linear-gradient(90deg, #e22222, #ff6b6b, #e22222);width:100%"></div><div class="footer-container" style="max-width:1400px;margin:0 auto;padding:80px 40px 50px"><div class="newsletter-box" style="background:linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);border-radius:24px;padding:50px 60px;margin-bottom:70px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:30px"><div><h3 style="font-size:clamp(22px, 3vw, 28px);font-weight:700;margin-bottom:12px">Subscribe to Our Newsletter</h3><p style="font-size:15px;color:rgba(255,255,255,0.7)">Get the latest updates on new products and upcoming sales</p></div><div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center"><input type="email" placeholder="Enter your email" style="padding:14px 24px;border-radius:12px;border:none;width:280px;font-size:14px;outline:none"/><button style="background:#e22222;color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:14px;font-weight:600;cursor:pointer">Subscribe →</button></div></div><div class="footer-grid" style="display:grid;grid-template-columns:repeat(auto-fit, minmax(250px, 1fr));gap:50px;margin-bottom:60px"><div><div class="footer-logo" style="display:flex;align-items:center;gap:12px;margin-bottom:24px;justify-content:flex-start"><div style="width:50px;height:50px;background:rgba(255,255,255,0.1);border-radius:12px;animation:pulse 1.5s ease-in-out infinite"></div><div><div style="font-weight:800;font-size:20px">360 ARTDESIGN</div><div style="font-size:11px;color:#e22222;letter-spacing:2px;font-weight:600">Digital Agency</div></div></div><p style="font-size:14px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:24px">We are a creative digital agency focused on crafting stunning websites, powerful brands, and growth-driven marketing strategies.</p><div class="footer-social" style="display:flex;gap:12px"><a href="https://www.facebook.com/people/360-Art-Design/61577825022096/" target="_blank" rel="noopener noreferrer" style="width:38px;height:38px;border-radius:50%;background:#1877F2;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;transition:all 0.3s ease"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg></a></div></div><div><h4 style="font-size:18px;font-weight:700;margin-bottom:24px;color:#fff">Our Services</h4><ul style="list-style:none;padding:0"><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">Website Design &amp; Development</li><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">E-commerce Solutions</li><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">Mobile App Development</li><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">SEO &amp; Digital Marketing</li><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">Branding &amp; Identity</li><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">Video Animation</li><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">Shopify Store</li></ul></div><div><h4 style="font-size:18px;font-weight:700;margin-bottom:24px;color:#fff">Quick Links</h4><ul style="list-style:none;padding:0"><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">About Us</li><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">Portfolio</li><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">Packages</li><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">Testimonials</li><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">Blog</li><li style="margin-bottom:14px;font-size:14px;color:rgba(255,255,255,0.6);cursor:pointer">Contact Us</li></ul></div><div><h4 style="font-size:18px;font-weight:700;margin-bottom:24px;color:#fff">Get In Touch</h4><div style="margin-bottom:18px;display:flex;gap:14px;align-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e22222" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path></svg><span style="font-size:14px;color:rgba(255,255,255,0.7)">+1 (786)-761-8327</span></div><div style="margin-bottom:18px;display:flex;gap:14px;align-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e22222" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><span style="font-size:14px;color:rgba(255,255,255,0.7)">info@bisonstechs.com</span></div><div style="margin-bottom:18px;display:flex;gap:14px;align-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e22222" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><span style="font-size:14px;color:rgba(255,255,255,0.7)">Wells Fargo Plaza 333 SE 2nd Ave, Suite 2000 Miami, FL 33131</span></div></div></div><div class="footer-bottom" style="border-top:1px solid rgba(255,255,255,0.08);padding-top:30px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px"><p style="font-size:13px;color:rgba(255,255,255,0.4);margin:0">© Copyrights <!-- -->2026<!-- --> | All Rights Reserved 360 ARTDESIGN</p><div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center"><span style="font-size:12px;color:rgba(255,255,255,0.4);cursor:pointer">Privacy Policy</span><span style="font-size:12px;color:rgba(255,255,255,0.4);cursor:pointer">Terms &amp; Conditions</span><span style="font-size:12px;color:rgba(255,255,255,0.4);cursor:pointer"></span></div></div></div></footer><!--$--><!--/$--><button class="fixed bottom-6 left-6 z-50 w-14 h-14 bg-[#e22222] text-white rounded-full shadow-lg hover:bg-[#b71c1c] transition-all duration-300 flex items-center justify-center hover:scale-110" style="animation:pulse 2s infinite"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5c-2.2 2.3-2.8 5.7-1.5 8.7S4.8 480 8 480c66.3 0 116-31.8 140.6-51.4 32.7 12.3 69 19.4 107.4 19.4 141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"></path></svg></button><script src="/_next/static/chunks/39fhi3drzvkg4.js" id="_R_" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0])</script><script>self.__next_f.push([1,"1:\"$Sreact.fragment\"\n2:I[70610,[\"/_next/static/chunks/2-s5oqwq_er23.js\",\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"/_next/static/chunks/14mrh2-p_w84d.js\"],\"default\"]\n3:I[39756,[\"/_next/static/chunks/2-s5oqwq_er23.js\",\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"/_next/static/chunks/14mrh2-p_w84d.js\"],\"default\"]\n4:I[37457,[\"/_next/static/chunks/2-s5oqwq_er23.js\",\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"/_next/static/chunks/14mrh2-p_w84d.js\"],\"default\"]\n5:I[48982,[\"/_next/static/chunks/2-s5oqwq_er23.js\",\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"/_next/static/chunks/14mrh2-p_w84d.js\"],\"default\"]\n6:I[47257,[\"/_next/static/chunks/2-s5oqwq_er23.js\",\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"/_next/static/chunks/14mrh2-p_w84d.js\"],\"ClientPageRoot\"]\n7:I[27925,[\"/_next/static/chunks/2-s5oqwq_er23.js\",\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"/_next/static/chunks/14mrh2-p_w84d.js\",\"/_next/static/chunks/1p9nuqq_p46x4.js\",\"/_next/static/chunks/1-cesc5kbn1py.js\",\"/_next/static/chunks/1-y615zizmi5h.js\"],\"default\"]\na:I[97367,[\"/_next/static/chunks/2-s5oqwq_er23.js\",\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"/_next/static/chunks/14mrh2-p_w84d.js\"],\"OutletBoundary\"]\nb:\"$Sreact.suspense\"\ne:I[97367,[\"/_next/static/chunks/2-s5oqwq_er23.js\",\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"/_next/static/chunks/14mrh2-p_w84d.js\"],\"ViewportBoundary\"]\n10:I[97367,[\"/_next/static/chunks/2-s5oqwq_er23.js\",\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"/_next/static/chunks/14mrh2-p_w84d.js\"],\"MetadataBoundary\"]\n12:I[68027,[\"/_next/static/chunks/2-s5oqwq_er23.js\",\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"/_next/static/chunks/14mrh2-p_w84d.js\"],\"default\",1]\n:HL[\"/_next/static/chunks/1canfnq736oax.css\",\"style\"]\n"])</script><script>self.__next_f.push([1,"0:{\"P\":null,\"c\":[\"\",\"blog\",\"\"],\"q\":\"\",\"i\":false,\"f\":[[[\"\",{\"children\":[\"blog\",{\"children\":[\"__PAGE__\",{}]}]},\"$undefined\",\"$undefined\",16],[[\"$\",\"$1\",\"c\",{\"children\":[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/1canfnq736oax.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}],[\"$\",\"script\",\"script-0\",{\"src\":\"/_next/static/chunks/2-s5oqwq_er23.js\",\"async\":true,\"nonce\":\"$undefined\"}],[\"$\",\"script\",\"script-1\",{\"src\":\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"async\":true,\"nonce\":\"$undefined\"}],[\"$\",\"script\",\"script-2\",{\"src\":\"/_next/static/chunks/14mrh2-p_w84d.js\",\"async\":true,\"nonce\":\"$undefined\"}]],[\"$\",\"html\",null,{\"lang\":\"en\",\"suppressHydrationWarning\":true,\"children\":[\"$\",\"body\",null,{\"style\":{\"margin\":0,\"paddingTop\":\"70px\"},\"suppressHydrationWarning\":true,\"children\":[[\"$\",\"$L2\",null,{}],[\"$\",\"$L3\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L4\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":404}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],[]],\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}],[\"$\",\"$L5\",null,{}]]}]}]]}],{\"children\":[[\"$\",\"$1\",\"c\",{\"children\":[null,[\"$\",\"$L3\",null,{\"parallelRouterKey\":\"children\",\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L4\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"forbidden\":\"$undefined\",\"unauthorized\":\"$undefined\"}]]}],{\"children\":[[\"$\",\"$1\",\"c\",{\"children\":[[\"$\",\"$L6\",null,{\"Component\":\"$7\",\"serverProvidedParams\":{\"searchParams\":{},\"params\":{},\"promises\":[\"$@8\",\"$@9\"]}}],[[\"$\",\"script\",\"script-0\",{\"src\":\"/_next/static/chunks/1p9nuqq_p46x4.js\",\"async\":true,\"nonce\":\"$undefined\"}],[\"$\",\"script\",\"script-1\",{\"src\":\"/_next/static/chunks/1-cesc5kbn1py.js\",\"async\":true,\"nonce\":\"$undefined\"}],[\"$\",\"script\",\"script-2\",{\"src\":\"/_next/static/chunks/1-y615zizmi5h.js\",\"async\":true,\"nonce\":\"$undefined\"}]],[\"$\",\"$La\",null,{\"children\":[\"$\",\"$b\",null,{\"name\":\"Next.MetadataOutlet\",\"children\":\"$@c\"}]}]]}],{},null,false,null]},null,false,\"$@d\"]},null,false,null],[\"$\",\"$1\",\"h\",{\"children\":[null,[\"$\",\"$Le\",null,{\"children\":\"$Lf\"}],[\"$\",\"div\",null,{\"hidden\":true,\"children\":[\"$\",\"$L10\",null,{\"children\":[\"$\",\"$b\",null,{\"name\":\"Next.Metadata\",\"children\":\"$L11\"}]}]}],null]}],false]],\"m\":\"$undefined\",\"G\":[\"$12\",[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/chunks/1canfnq736oax.css\",\"precedence\":\"next\",\"crossOrigin\":\"$undefined\",\"nonce\":\"$undefined\"}]]],\"S\":true,\"h\":null,\"s\":\"$undefined\",\"l\":\"$undefined\",\"p\":\"$undefined\",\"d\":\"$undefined\",\"b\":\"Q-r8U8-sz-MRSqCEYG3Je\"}\n"])</script><script>self.__next_f.push([1,"13:[]\nd:\"$W13\"\n8:{}\n9:\"$0:f:0:1:1:children:1:children:0:props:children:0:props:serverProvidedParams:params\"\n"])</script><script>self.__next_f.push([1,"f:[[\"$\",\"meta\",\"0\",{\"charSet\":\"utf-8\"}],[\"$\",\"meta\",\"1\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}]]\n"])</script><script>self.__next_f.push([1,"14:I[27201,[\"/_next/static/chunks/2-s5oqwq_er23.js\",\"/_next/static/chunks/2t8g_g27wi_9v.js\",\"/_next/static/chunks/14mrh2-p_w84d.js\"],\"IconMark\"]\nc:null\n11:[[\"$\",\"link\",\"0\",{\"rel\":\"icon\",\"href\":\"/favicon.ico?favicon.2vob68tjqpejf.ico\",\"sizes\":\"256x256\",\"type\":\"image/x-icon\"}],[\"$\",\"$L14\",\"1\",{}]]\n"])</script></body></html>

@@ -11,11 +11,25 @@ const countries = [
   { code: "+61", flag: "🇦🇺", name: "AU" },
 ];
 
+const services = [
+  "Website Design",
+  "Ecommerce Solutions",
+  "Web Application",
+  "Mobile Application",
+  "Website Maintenance",
+  "Domain And Hosting",
+  "Branding",
+  "Video Animation",
+  "SEO",
+  "Shopify Store",
+];
+
 export default function HireUsPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
+    service: "",
     message: "",
   });
   const [countryCode, setCountryCode] = useState("+92");
@@ -62,7 +76,7 @@ export default function HireUsPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.email || !formData.phone) {
+    if (!formData.name || !formData.email || !formData.phone || !formData.service) {
       setError("Please fill in all required fields");
       return;
     }
@@ -86,6 +100,7 @@ export default function HireUsPage() {
           fullName: formData.name,
           email: formData.email,
           phoneNumber: fullPhoneNumber,
+          service: formData.service,
           message: formData.message || "",
         }),
       });
@@ -94,7 +109,7 @@ export default function HireUsPage() {
 
       if (response.ok) {
         setSuccess("Thank you! We will contact you soon.");
-        setFormData({ name: "", email: "", phone: "", message: "" });
+        setFormData({ name: "", email: "", phone: "", service: "", message: "" });
         setCountryCode("+92");
         setCountryFlag("🇵🇰");
         setIsChecked(false);
@@ -666,6 +681,26 @@ export default function HireUsPage() {
               <span className="hire-phone-icon">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e22222" strokeWidth="1.8">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.21 11.7 19.79 19.79 0 0 1 1.14 3a2 2 0 0 1 2-1.95h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+              </span>
+            </div>
+
+            <div className="hire-field">
+              <select
+                value={formData.service}
+                onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                required
+              >
+                <option value="">Select Service *</option>
+                {services.map((service) => (
+                  <option key={service} value={service}>{service}</option>
+                ))}
+              </select>
+              <span className="hire-field-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e22222" strokeWidth="1.8">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                  <line x1="12" y1="22.08" x2="12" y2="12"/>
                 </svg>
               </span>
             </div>

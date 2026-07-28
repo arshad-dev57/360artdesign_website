@@ -6,6 +6,7 @@ const navLinks = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
   { name: "How It Works", href: "/how-it-works" },
+  { name: "Blog", href: "/blog" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -55,16 +56,38 @@ export default function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav style={{ display: "flex", alignItems: "center", gap: 4 }}>
+        <nav style={{ display: "flex", alignItems: "center", gap: 8 }}>
           {navLinks.map((l) => (
             <Link key={l.name} href={l.href} style={{
-              fontSize: 13, fontWeight: 500, color: "rgba(255,255,255,0.75)",
-              textDecoration: "none", padding: "6px 12px", borderRadius: 4,
-              transition: "color 0.2s",
+              position: "relative",
+              fontSize: 13, fontWeight: 600, color: "#ffffff",
+              textDecoration: "none", padding: "10px 20px", borderRadius: 25,
+              background: "linear-gradient(135deg, #ff4757 0%, #ff6b81 100%)",
+              boxShadow: "0 4px 15px rgba(255, 71, 87, 0.4)",
+              transition: "all 0.3s ease",
             }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#ffffff")}
-              onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.75)")}
-            >{l.name}</Link>
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 6px 20px rgba(255, 71, 87, 0.5)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 4px 15px rgba(255, 71, 87, 0.4)";
+              }}
+            >
+              {l.name}
+              <span style={{
+                position: "absolute",
+                bottom: -8,
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: 0,
+                height: 0,
+                borderLeft: "8px solid transparent",
+                borderRight: "8px solid transparent",
+                borderTop: "8px solid #ff6b81",
+              }}></span>
+            </Link>
           ))}
           <button style={{
             marginLeft: 8, fontSize: 13, fontWeight: 500,
