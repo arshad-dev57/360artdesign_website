@@ -47,16 +47,16 @@ const navLinks = [
 ];
 
 const dropdownServices = [
-  { name: "Web Design", href: "/services", sectionId: "web-design" },
-  { name: "Ecommerce Solutions", href: "/services", sectionId: "ecommerce" },
-  { name: "Web Apps", href: "/services", sectionId: "web-apps" },
-  { name: "Mobile Apps", href: "/services", sectionId: "mobile-apps" },
-  { name: "Website Maintenance", href: "/services", sectionId: "website-maintenance" },
-  { name: "Domain And Hosting", href: "/services", sectionId: "domain-hosting" },
-  { name: "Branding", href: "/services", sectionId: "branding" },
-  { name: "Video Animation", href: "/services", sectionId: "video-animation" },
-  { name: "SEO", href: "/services", sectionId: "seo" },
   { name: "Shopify Store", href: "/shopify", sectionId: "" },
+  { name: "Web Design", href: "/services/web-design", sectionId: "" },
+  { name: "Ecommerce Solutions", href: "/services/ecommerce", sectionId: "" },
+  { name: "Web Apps", href: "/services/web-apps", sectionId: "" },
+  { name: "Mobile Apps", href: "/services/mobile-apps", sectionId: "" },
+  { name: "Website Maintenance", href: "/services/website-maintenance", sectionId: "" },
+  { name: "Domain And Hosting", href: "/services/domain-hosting", sectionId: "" },
+  { name: "Branding", href: "/services/branding", sectionId: "" },
+  { name: "Video Animation", href: "/services/video-animation", sectionId: "" },
+  { name: "SEO", href: "/services/seo", sectionId: "" },
 ];
 
 export function Header() {
@@ -95,23 +95,8 @@ export function Header() {
     return pathname === href || pathname.startsWith(href + "/");
   };
 
-  const handleServiceClick = (serviceName: string, href: string, sectionId: string) => {
-    console.log('Header handleServiceClick called:', { serviceName, sectionId, pathname });
-    // Shopify goes to its own page
-    if (serviceName === "Shopify") {
-      router.push(href);
-      setIsDropdownOpen(false);
-      return;
-    }
-    const element = document.getElementById(sectionId);
-    if (element) {
-      console.log('Element found, scrolling to:', sectionId);
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
-      console.log('Element not found, navigating to services page');
-      sessionStorage.setItem('scrollToService', sectionId);
-      router.push(href);
-    }
+  const handleServiceClick = (serviceName: string, href: string) => {
+    router.push(href);
     setIsDropdownOpen(false);
   };
 
@@ -209,7 +194,7 @@ export function Header() {
                         {dropdownServices.map((service, idx) => (
                           <div 
                             key={idx} 
-                            onClick={() => handleServiceClick(service.name, service.href, service.sectionId)}
+                            onClick={() => handleServiceClick(service.name, service.href)}
                             style={{ display:"flex",alignItems:"center",justifyContent:"space-between",padding:"12px 20px",color:"rgba(255,255,255,0.8)",fontSize:13,fontWeight:500,textDecoration:"none",transition:"all 0.2s ease",borderBottom:idx<dropdownServices.length-1?"1px solid rgba(255,255,255,0.05)":"none",cursor:"pointer" }}
                             onMouseEnter={e => { e.currentTarget.style.color="#e22222"; const a=e.currentTarget.querySelector(".dropdown-arrow") as HTMLElement|null; if(a){a.style.opacity="1";a.style.transform="translateX(5px)";} }}
                             onMouseLeave={e => { e.currentTarget.style.color="rgba(255,255,255,0.8)"; const a=e.currentTarget.querySelector(".dropdown-arrow") as HTMLElement|null; if(a){a.style.opacity="0";a.style.transform="translateX(0)";} }}>
@@ -1294,13 +1279,13 @@ export function FooterSection() {
   };
 
   const footerServices = [
-    { name: "Website Design & Development", sectionId: "web-design" },
-    { name: "E-commerce Solutions", sectionId: "ecommerce" },
-    { name: "Mobile App Development", sectionId: "mobile-apps" },
-    { name: "SEO & Digital Marketing", sectionId: "seo" },
-    { name: "Branding & Identity", sectionId: "branding" },
-    { name: "Video Animation", sectionId: "video-animation" },
-    { name: "Shopify Store", sectionId: "shopify" },
+    { name: "Website Design & Development", href: "/services/web-design" },
+    { name: "E-commerce Solutions", href: "/services/ecommerce" },
+    { name: "Mobile App Development", href: "/services/mobile-apps" },
+    { name: "SEO & Digital Marketing", href: "/services/seo" },
+    { name: "Branding & Identity", href: "/services/branding" },
+    { name: "Video Animation", href: "/services/video-animation" },
+    { name: "Shopify Store", href: "/shopify" },
   ];
 
   const quickLinks = [
@@ -1312,17 +1297,8 @@ export function FooterSection() {
     { name: "Contact Us", href: "/contact" },
   ];
 
-  const handleServiceClick = (serviceName: string, sectionId: string) => {
-    console.log('handleServiceClick called:', { serviceName, sectionId, pathname });
-    const element = document.getElementById(sectionId);
-    if (element) {
-      console.log('Element found, scrolling to:', sectionId);
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else {
-      console.log('Element not found, navigating to services page');
-      sessionStorage.setItem('scrollToService', sectionId);
-      router.push("/services");
-    }
+  const handleServiceClick = (serviceName: string, href: string) => {
+    router.push(href);
   };
 
   const handleQuickLinkClick = (href: string) => {
@@ -1392,7 +1368,7 @@ export function FooterSection() {
                   style={{ marginBottom:14,fontSize:14,color:"rgba(255,255,255,0.6)",cursor:"pointer" }} 
                   onMouseEnter={e=>e.currentTarget.style.color="#e22222"} 
                   onMouseLeave={e=>e.currentTarget.style.color="rgba(255,255,255,0.6)"}
-                  onClick={() => handleServiceClick(s.name, s.sectionId)}
+                  onClick={() => handleServiceClick(s.name, s.href)}
                 >
                   {s.name}
                 </li>

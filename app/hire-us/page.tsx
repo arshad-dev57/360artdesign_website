@@ -613,11 +613,10 @@ export default function HireUsPage() {
             </svg>
           </div>
 
-          <h1 className="hire-heading">We would like to hear from you</h1>
+          <h1 className="hire-heading">Let's turn your ideas into reality.</h1>
 
           <p className="hire-sub">
-            Heads up! We require that you sign up for a 360 ArtDesign services and packages.<br />
-            We make all your dreams come true in a successful project.
+          Submit your details below and receive a free consultation.<br />
           </p>
 
           <form className="hire-form" onSubmit={handleSubmit}>

@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { FaPhoneAlt, FaTimes, FaArrowUp, FaCommentDots, FaArrowRight } from "react-icons/fa";
 import { useRouter, usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import React from "react";
 
 const LaptopSVG = () => (
@@ -201,7 +202,6 @@ function ScrollToTopButton() {
   );
 }
 
-// ==================== CONSULTANCY MODAL ====================
 function ConsultancyModal({ isOpen, onClose, onMouseEnter, onMouseLeave }: { isOpen: boolean; onClose: () => void; onMouseEnter?: () => void; onMouseLeave?: () => void }) {
   const [selectedCountry, setSelectedCountry] = useState("us");
   const [isLoading, setIsLoading] = useState(false);
@@ -394,41 +394,23 @@ export function Header() {
   };
 
   const dropdownServices = [
-    { name: "Web Design", href: "/services", sectionId: "web-design" },
-    { name: "Ecommerce Solutions", href: "/services", sectionId: "ecommerce" },
-    { name: "Web Apps", href: "/services", sectionId: "web-apps" },
-    { name: "Mobile Apps", href: "/services", sectionId: "mobile-apps" },
-    { name: "Website Maintenance", href: "/services", sectionId: "website-maintenance" },
-    { name: "Domain And Hosting", href: "/services", sectionId: "domain-hosting" },
-    { name: "Branding", href: "/services", sectionId: "branding" },
-    { name: "Video Animation", href: "/services", sectionId: "video-animation" },
-    { name: "SEO", href: "/services", sectionId: "seo" },
     { name: "Shopify Store", href: "/shopify", sectionId: "" },
+    { name: "Web Design", href: "/services/web-design", sectionId: "" },
+    { name: "Ecommerce Solutions", href: "/services/ecommerce", sectionId: "" },
+    { name: "Web Apps", href: "/services/web-apps", sectionId: "" },
+    { name: "Mobile Apps", href: "/services/mobile-apps", sectionId: "" },
+    { name: "Website Maintenance", href: "/services/website-maintenance", sectionId: "" },
+    { name: "Domain And Hosting", href: "/services/domain-hosting", sectionId: "" },
+    { name: "Branding", href: "/services/branding", sectionId: "" },
+    { name: "Video Animation", href: "/services/video-animation", sectionId: "" },
+    { name: "SEO", href: "/services/seo", sectionId: "" },
   ];
 
   const handleMouseEnter = () => { if (hoverTimeout.current) clearTimeout(hoverTimeout.current); setIsDropdownOpen(true); };
   const handleMouseLeave = () => { hoverTimeout.current = setTimeout(() => setIsDropdownOpen(false), 150); };
 
-  const handleServiceClick = (serviceName: string, href: string, sectionId: string) => {
-    // Shopify goes to its own page
-    if (serviceName === "Shopify") {
-      router.push(href);
-      setIsDropdownOpen(false);
-      return;
-    }
-    if (pathname === "/services") {
-      // If already on services page, just scroll
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 100);
-    } else {
-      // Navigate and scroll after page load
-      sessionStorage.setItem('scrollToService', sectionId);
-      router.push(href);
-    }
+  const handleServiceClick = (serviceName: string, href: string) => {
+    router.push(href);
     setIsDropdownOpen(false);
   };
 
@@ -509,7 +491,7 @@ export function Header() {
                         {dropdownServices.map((service, idx) => (
                           <div 
                             key={idx} 
-                            onClick={() => handleServiceClick(service.name, service.href, service.sectionId)}
+                            onClick={() => handleServiceClick(service.name, service.href)}
                             style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 20px", color: "rgba(255,255,255,0.8)", fontSize: 13, fontWeight: 500, textDecoration: "none", transition: "all 0.2s ease", borderBottom: idx < dropdownServices.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none", cursor: "pointer" }}
                             onMouseEnter={e => { e.currentTarget.style.color = "#e22222"; const a = e.currentTarget.querySelector(".dropdown-arrow") as HTMLElement | null; if (a) { a.style.opacity = "1"; a.style.transform = "translateX(5px)"; } }}
                             onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.8)"; const a = e.currentTarget.querySelector(".dropdown-arrow") as HTMLElement | null; if (a) { a.style.opacity = "0"; a.style.transform = "translateX(0)"; } }}>
@@ -684,11 +666,25 @@ interface ApiProjectType {
   isActive: boolean;
 }
 
+const portfolioCategories = [
+  { id: "all", label: "All Projects" },
+  { id: "website-design", label: "Website Design" },
+  { id: "mobile-apps", label: "Mobile Apps" },
+  { id: "logo-branding", label: "Logo & Branding" },
+];
+
+const categoryAccents: Record<string, string> = {
+  "logo-branding": "#7c3aed",
+  "website-design": "#1a4fd6",
+  "mobile-apps": "#e22222",
+};
+
 function PortfolioSection() {
   const [selectedProject, setSelectedProject] = useState<ApiProjectType | null>(null);
   const [projects, setProjects] = useState<ApiProjectType[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [activeCat, setActiveCat] = useState("all");
 
   useEffect(() => { fetchProjects(); }, []);
 
@@ -708,36 +704,14 @@ function PortfolioSection() {
   const openModal = (project: ApiProjectType) => { setSelectedProject(project); document.body.style.overflow = "hidden"; };
   const closeModal = () => { setSelectedProject(null); document.body.style.overflow = "auto"; };
 
-  const getProjectsByCategory = (category: string) => projects.filter(p => p.category === category && p.isActive);
-
   const getCategoryLabel = (category: string) => {
     const labels: Record<string, string> = { "logo-branding": "Logo & Branding", "website-design": "Website Design", "mobile-apps": "Mobile Apps" };
     return labels[category] || category;
   };
 
-  const logoProjects = getProjectsByCategory("logo-branding");
-  const websiteProjects = getProjectsByCategory("website-design");
-  const mobileProjects = getProjectsByCategory("mobile-apps");
-
-  const renderCard = (project: ApiProjectType, index: number) => (
-    <div key={project._id} onClick={() => openModal(project)} className="pf-card-wrap fade-in-up" style={{ animationDelay: `${index * 0.07}s`, borderRadius: 12, cursor: "pointer", position: "relative" }}>
-      <div style={{ position: "relative", width: "100%", height: 260, overflow: "hidden", background: "#f0f0f0", borderRadius: 12, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        {project.image?.secureUrl ? (
-          <img src={project.image.secureUrl} alt={project.title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.5s ease" }} className="pf-img" />
-        ) : (
-          <div style={{ width: "100%", height: "100%", background: "#e22222", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 48 }}>🎨</div>
-        )}
-        <div className="pf-overlay" style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.38)", display: "flex", alignItems: "center", justifyContent: "center", opacity: 0, transition: "opacity 0.3s", borderRadius: 12 }}>
-          <button style={{ background: "rgba(0,0,0,0.82)", color: "#fff", border: "none", padding: "11px 28px", borderRadius: 10, fontSize: 13, fontWeight: 700, cursor: "pointer", fontFamily: "'Nunito', sans-serif", letterSpacing: 0.5 }}>PREVIEW PROJECT →</button>
-        </div>
-      </div>
-      <div style={{ padding: "14px 4px 6px" }}>
-        <div style={{ fontSize: 11, color: "#e22222", fontWeight: 700, letterSpacing: 1.5, marginBottom: 4, textTransform: "uppercase" }}>{getCategoryLabel(project.category)}</div>
-        <div style={{ fontSize: 18, fontWeight: 800, color: "#1a1a1a" }}>{project.title}</div>
-        {project.subTitle && <div style={{ fontSize: 12, color: "#666", marginTop: 4 }}>{project.subTitle}</div>}
-      </div>
-    </div>
-  );
+  const activeProjects = projects.filter(p => p.isActive);
+  const filteredProjects = activeCat === "all" ? activeProjects : activeProjects.filter(p => p.category === activeCat);
+  const countFor = (id: string) => (id === "all" ? activeProjects.length : activeProjects.filter(p => p.category === id).length);
 
   if (loading) return (
     <section id="portfolio-projects-section" style={{ background: "#f8f9ff", padding: "90px 40px 100px", fontFamily: "'Nunito', sans-serif", textAlign: "center" }}>
@@ -757,25 +731,294 @@ function PortfolioSection() {
   return (
     <>
       <style>{`
-        .fade-in-up{opacity:0;transform:translateY(20px);animation-name:fadeInUp;animation-duration:0.5s;animation-fill-mode:both;animation-timing-function:ease}
-        @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes modalFade{from{opacity:0}to{opacity:1}}
-        @keyframes modalSlide{from{transform:translateY(36px) scale(0.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
-        .pf-card-wrap:hover .pf-img{transform:scale(1.06)}
-        .pf-card-wrap:hover .pf-overlay{opacity:1!important}
-        @media (max-width: 768px) {
-          .portfolio-section { padding: 60px 20px 70px !important; }
-          .portfolio-grid { grid-template-columns: 1fr !important; gap: 24px !important; }
-          .category-header { flex-wrap: wrap !important; }
+        .pfm-backdrop {
+          position: fixed;
+          inset: 0;
+          z-index: 10000;
+          background: rgba(8, 10, 20, 0.82);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 24px;
         }
-        @media (min-width: 769px) and (max-width: 1024px) {
+        .pfm-card {
+          position: relative;
+          width: min(1040px, 100%);
+          height: min(740px, 90vh);
+          background: #0d1220;
+          border-radius: 24px;
+          overflow: hidden;
+          box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55);
+          font-family: 'Nunito', sans-serif;
+        }
+        .pfm-scroll {
+          position: absolute;
+          inset: 0;
+          overflow-y: auto;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(255,255,255,0.35) transparent;
+        }
+        .pfm-scroll::-webkit-scrollbar { width: 6px; }
+        .pfm-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.35); border-radius: 3px; }
+        .pfm-scroll img { width: 100%; height: auto; display: block; }
+        .pfm-top {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 5;
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 18px;
+          padding: 20px 20px 36px 24px;
+          background: linear-gradient(180deg, rgba(8,10,20,0.82) 0%, rgba(8,10,20,0.45) 55%, transparent 100%);
+          pointer-events: none;
+        }
+        .pfm-title-stack { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+        .pfm-title-stack .pfm-cat {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          align-self: flex-start;
+          background: rgba(255,255,255,0.14);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid rgba(255,255,255,0.25);
+          color: #fff;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 1.2px;
+          text-transform: uppercase;
+          padding: 6px 13px;
+          border-radius: 50px;
+        }
+        .pfm-title-stack .pfm-title {
+          color: #fff;
+          font-size: 24px;
+          font-weight: 900;
+          letter-spacing: -0.4px;
+          line-height: 1.25;
+          margin: 0;
+          text-shadow: 0 2px 14px rgba(0,0,0,0.45);
+        }
+        .pfm-close {
+          pointer-events: auto;
+          flex-shrink: 0;
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.25);
+          background: rgba(255, 255, 255, 0.14);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          color: #fff;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.25s ease, border-color 0.25s ease, transform 0.3s ease;
+        }
+        .pfm-close:hover { background: #e22222; border-color: #e22222; transform: rotate(90deg); }
+        @media (max-width: 900px) {
+          .pfm-backdrop { padding: 14px; }
+          .pfm-card { height: 88vh; border-radius: 18px; }
+          .pfm-title-stack .pfm-title { font-size: 18px; }
+        }
+
+        .pf2-grid {
+          max-width: 1300px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 26px;
+        }
+        .pf2-card {
+          position: relative;
+          border-radius: 22px;
+          overflow: hidden;
+          cursor: pointer;
+          background: #101322;
+          height: 340px;
+          box-shadow: 0 6px 24px rgba(13,18,32,0.08);
+        }
+        .pf2-card.featured {
+          grid-column: span 2;
+          grid-row: span 2;
+          height: 100%;
+          min-height: 706px;
+        }
+        .pf2-card img.pf2-img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+          transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+        }
+        .pf2-card:hover img.pf2-img {
+          transform: scale(1.07);
+          filter: brightness(0.85);
+        }
+        .pf2-shade {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(10,12,24,0.05) 30%, rgba(10,12,24,0.42) 68%, rgba(10,12,24,0.88) 100%);
+          transition: background 0.4s ease;
+          z-index: 1;
+        }
+        .pf2-card:hover .pf2-shade {
+          background: linear-gradient(180deg, rgba(10,12,24,0.15) 0%, rgba(10,12,24,0.55) 55%, rgba(10,12,24,0.94) 100%);
+        }
+        .pf2-chip {
+          position: absolute;
+          top: 18px;
+          left: 18px;
+          z-index: 2;
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          background: rgba(255,255,255,0.14);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid rgba(255,255,255,0.25);
+          color: #fff;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 1.2px;
+          text-transform: uppercase;
+          padding: 7px 14px;
+          border-radius: 50px;
+        }
+        .pf2-arrow {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          z-index: 2;
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          background: #fff;
+          color: #0d1220;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transform: translateY(-8px) rotate(-45deg);
+          transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .pf2-card:hover .pf2-arrow {
+          opacity: 1;
+          transform: translateY(0) rotate(-45deg);
+        }
+        .pf2-content {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 2;
+          padding: 26px 26px 24px;
+          transform: translateY(6px);
+          transition: transform 0.35s ease;
+        }
+        .pf2-card:hover .pf2-content { transform: translateY(0); }
+        .pf2-content .pf2-title {
+          color: #fff;
+          font-size: 21px;
+          font-weight: 900;
+          letter-spacing: -0.4px;
+          margin: 0 0 6px;
+          line-height: 1.25;
+        }
+        .pf2-card.featured .pf2-content .pf2-title { font-size: 30px; }
+        .pf2-content .pf2-sub {
+          color: rgba(255,255,255,0.72);
+          font-size: 13.5px;
+          line-height: 1.6;
+          margin: 0 0 0;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        .pf2-view {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: #fff;
+          font-size: 13px;
+          font-weight: 800;
+          letter-spacing: 0.6px;
+          margin-top: 14px;
+          opacity: 0;
+          transform: translateY(8px);
+          transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
+        }
+        .pf2-card:hover .pf2-view { opacity: 1; transform: translateY(0); }
+        .pf2-view .pf2-line { width: 26px; height: 2px; background: #e22222; border-radius: 2px; }
+
+        .pf2-tabs {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-bottom: 52px;
+        }
+        .pf2-tab {
+          position: relative;
+          border: 1px solid #e3e7f0;
+          background: #fff;
+          color: #4b5563;
+          font-family: 'Nunito', sans-serif;
+          font-size: 14px;
+          font-weight: 800;
+          padding: 11px 22px;
+          border-radius: 50px;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          transition: color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .pf2-tab:hover { border-color: rgba(226,34,34,0.4); color: #e22222; }
+        .pf2-tab.active {
+          background: #e22222;
+          border-color: #e22222;
+          color: #fff;
+          box-shadow: 0 10px 26px rgba(226,34,34,0.32);
+        }
+        .pf2-tab .pf2-count {
+          font-size: 11.5px;
+          font-weight: 900;
+          padding: 3px 9px;
+          border-radius: 50px;
+          background: rgba(13,18,32,0.06);
+          color: #6b7280;
+          transition: background 0.25s ease, color 0.25s ease;
+        }
+        .pf2-tab.active .pf2-count { background: rgba(255,255,255,0.22); color: #fff; }
+
+        @media (max-width: 1024px) {
+          .pf2-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+          .pf2-card.featured { grid-column: span 2; grid-row: span 1; min-height: 420px; height: 420px; }
           .portfolio-section { padding: 80px 30px 90px !important; }
-          .portfolio-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 24px !important; }
+        }
+        @media (max-width: 640px) {
+          .pf2-grid { grid-template-columns: 1fr; gap: 18px; }
+          .pf2-card { height: 300px; }
+          .pf2-card.featured { grid-column: span 1; min-height: 340px; height: 340px; }
+          .pf2-card.featured .pf2-content .pf2-title { font-size: 24px; }
+          .portfolio-section { padding: 60px 16px 70px !important; }
+          .pf2-arrow { opacity: 1; transform: translateY(0) rotate(-45deg); }
+          .pf2-view { opacity: 1; transform: translateY(0); }
         }
       `}</style>
 
       <section id="portfolio-projects-section" className="portfolio-section" style={{ background: "#f8f9ff", padding: "90px 40px 100px", fontFamily: "'Nunito', sans-serif" }}>
-        <div style={{ textAlign: "center", marginBottom: 50 }}>
+        <div style={{ textAlign: "center", marginBottom: 40 }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 16 }}>
             <svg width="36" height="18" viewBox="0 0 36 18" fill="none"><path d="M0 9 L8 2 L12 9 L18 2 L22 9 L28 2 L36 9" stroke="#e22222" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
             <span style={{ fontSize: 13, fontWeight: 800, letterSpacing: "3px", color: "#e22222", textTransform: "uppercase" }}>FEATURED WORK</span>
@@ -785,80 +1028,116 @@ function PortfolioSection() {
           <p style={{ fontSize: 16, color: "#666", maxWidth: 560, margin: "0 auto", lineHeight: 1.7 }}>Explore our latest work across websites, mobile apps, and brand identities.</p>
         </div>
 
-        {logoProjects.length > 0 && (
-          <div style={{ maxWidth: 1300, margin: "0 auto 60px" }}>
-            <div className="category-header" style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-              <div style={{ width: 4, height: 26, background: "#e22222", borderRadius: 2 }} />
-              <span style={{ fontSize: 16, fontWeight: 800, color: "#1a1a1a", letterSpacing: 0.5 }}>Logo & Branding</span>
-              <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.08)" }} />
-            </div>
-            <div className="portfolio-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 28 }}>
-              {logoProjects.map((project, index) => renderCard(project, index))}
-            </div>
-          </div>
-        )}
+        {/* Filter tabs */}
+        <div className="pf2-tabs">
+          {portfolioCategories.map((cat) => (
+            <button
+              key={cat.id}
+              className={`pf2-tab ${activeCat === cat.id ? "active" : ""}`}
+              onClick={() => setActiveCat(cat.id)}
+            >
+              {cat.label}
+              <span className="pf2-count">{countFor(cat.id)}</span>
+            </button>
+          ))}
+        </div>
 
-        {websiteProjects.length > 0 && (
-          <div style={{ maxWidth: 1300, margin: "0 auto 60px" }}>
-            <div className="category-header" style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-              <div style={{ width: 4, height: 26, background: "#e22222", borderRadius: 2 }} />
-              <span style={{ fontSize: 16, fontWeight: 800, color: "#1a1a1a", letterSpacing: 0.5 }}>Website Design</span>
-              <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.08)" }} />
-            </div>
-            <div className="portfolio-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 28 }}>
-              {websiteProjects.map((project, index) => renderCard(project, index))}
-            </div>
-          </div>
-        )}
+        {/* Animated project gallery */}
+        <motion.div className="pf2-grid" layout>
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.map((project, index) => {
+              const accent = categoryAccents[project.category] || "#e22222";
+              const isFeatured = index === 0 && filteredProjects.length > 2;
+              return (
+                <motion.div
+                  key={project._id}
+                  layout
+                  initial={{ opacity: 0, y: 44, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.92 }}
+                  transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: Math.min(index * 0.06, 0.5) }}
+                  className={`pf2-card ${isFeatured ? "featured" : ""}`}
+                  onClick={() => openModal(project)}
+                >
+                  {project.image?.secureUrl ? (
+                    <img className="pf2-img" src={project.image.secureUrl} alt={project.title} loading="lazy" />
+                  ) : (
+                    <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${accent}, #0d1220)`, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 52 }}>🎨</div>
+                  )}
+                  <div className="pf2-shade" />
 
-        {mobileProjects.length > 0 && (
-          <div style={{ maxWidth: 1300, margin: "0 auto 60px" }}>
-            <div className="category-header" style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
-              <div style={{ width: 4, height: 26, background: "#e22222", borderRadius: 2 }} />
-              <span style={{ fontSize: 16, fontWeight: 800, color: "#1a1a1a", letterSpacing: 0.5 }}>Mobile Apps</span>
-              <div style={{ flex: 1, height: 1, background: "rgba(0,0,0,0.08)" }} />
-            </div>
-            <div className="portfolio-grid" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 28 }}>
-              {mobileProjects.map((project, index) => renderCard(project, index))}
-            </div>
-          </div>
-        )}
+                  <span className="pf2-chip">
+                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: accent, display: "inline-block", boxShadow: `0 0 8px ${accent}` }} />
+                    {getCategoryLabel(project.category)}
+                  </span>
 
-        {projects.length === 0 && !loading && (
+                  <span className="pf2-arrow">
+                    <FaArrowRight size={15} />
+                  </span>
+
+                  <div className="pf2-content">
+                    <h3 className="pf2-title">{project.title}</h3>
+                    {project.subTitle && <p className="pf2-sub">{project.subTitle}</p>}
+                    <span className="pf2-view">
+                      <span className="pf2-line" />
+                      VIEW PROJECT
+                    </span>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </motion.div>
+
+        {filteredProjects.length === 0 && !loading && (
           <div style={{ textAlign: "center", padding: "60px 20px" }}>
-            <p style={{ color: "#666", fontSize: 16 }}>No projects found. Please add some projects to the database.</p>
+            <p style={{ color: "#666", fontSize: 16 }}>No projects found in this category yet.</p>
           </div>
         )}
       </section>
 
-      {selectedProject && (
-        <div style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.88)", zIndex: 10000, animation: "modalFade 0.25s ease", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }} onClick={closeModal}>
-          <div style={{ background: "#fff", borderRadius: 20, width: "92%", maxWidth: 1000, maxHeight: "88vh", display: "flex", flexDirection: "column", overflow: "hidden", animation: "modalSlide 0.3s ease", boxShadow: "0 30px 80px rgba(0,0,0,0.6)" }} onClick={e => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 24px", background: "#111", color: "#fff", flexShrink: 0 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                <div style={{ background: "#e22222", width: 38, height: 38, borderRadius: 9, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 17 }}>📱</div>
-                <div>
-                  <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800 }}>{selectedProject.title}</h3>
-                  <p style={{ margin: "2px 0 0", fontSize: 11, color: "rgba(255,255,255,0.55)" }}>{getCategoryLabel(selectedProject.category)}</p>
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            className="pfm-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={closeModal}
+          >
+            <motion.div
+              className="pfm-card"
+              initial={{ opacity: 0, y: 52, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 32, scale: 0.96 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              onClick={e => e.stopPropagation()}
+            >
+              <div className="pfm-top">
+                <div className="pfm-title-stack">
+                  <span className="pfm-cat">
+                    <span style={{ width: 7, height: 7, borderRadius: "50%", background: categoryAccents[selectedProject.category] || "#e22222", display: "inline-block", boxShadow: `0 0 8px ${categoryAccents[selectedProject.category] || "#e22222"}` }} />
+                    {getCategoryLabel(selectedProject.category)}
+                  </span>
+                  <h3 className="pfm-title">{selectedProject.title}</h3>
                 </div>
+                <button className="pfm-close" onClick={closeModal} aria-label="Close preview">
+                  <FaTimes size={16} />
+                </button>
               </div>
-              <button onClick={closeModal} style={{ background: "rgba(255,255,255,0.1)", border: "none", width: 36, height: 36, borderRadius: "50%", cursor: "pointer", fontSize: 17, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>✕</button>
-            </div>
-            <div style={{ flex: 1, overflowY: "auto", background: "#f8f9ff", display: "flex", flexDirection: "column", alignItems: "center", padding: "36px 24px", gap: 28 }}>
-              <div style={{ width: "100%", maxWidth: 860, borderRadius: 12, overflow: "hidden", boxShadow: "0 8px 36px rgba(0,0,0,0.16)" }}>
-                <div style={{ background: "#2b2b2b", padding: "10px 16px", display: "flex", alignItems: "center", gap: 10 }}>
-                  <div style={{ display: "flex", gap: 5 }}>{["#ff5f57", "#febc2e", "#28c840"].map(c => <div key={c} style={{ width: 11, height: 11, borderRadius: "50%", background: c }} />)}</div>
-                  <div style={{ flex: 1, background: "#3d3d3d", borderRadius: 6, padding: "5px 12px", fontSize: 12, color: "rgba(255,255,255,0.7)", display: "flex", alignItems: "center", gap: 6 }}>📱 {selectedProject.title}</div>
-                </div>
-                {selectedProject.image?.secureUrl && (
-                  <img src={selectedProject.image.secureUrl} alt={selectedProject.title} style={{ width: "100%", height: "auto", maxHeight: 500, objectFit: "contain", background: "#f5f5f5" }} />
+
+              <div className="pfm-scroll">
+                {selectedProject.image?.secureUrl ? (
+                  <img src={selectedProject.image.secureUrl} alt={selectedProject.title} />
+                ) : (
+                  <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${categoryAccents[selectedProject.category] || "#e22222"}, #0d1220)`, display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontSize: 64 }}>🎨</div>
                 )}
               </div>
-              {selectedProject.subTitle && <p style={{ fontSize: 14, color: "#666", textAlign: "center", maxWidth: 600 }}>{selectedProject.subTitle}</p>}
-            </div>
-          </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
@@ -1048,13 +1327,13 @@ function FooterSection() {
 
   // Footer services with proper navigation
   const footerServices = [
-    { name: "Website Design & Development", sectionId: "web-design" },
-    { name: "E-commerce Solutions", sectionId: "ecommerce" },
-    { name: "Mobile App Development", sectionId: "mobile-apps" },
-    { name: "SEO & Digital Marketing", sectionId: "seo" },
-    { name: "Branding & Identity", sectionId: "branding" },
-    { name: "Video Animation", sectionId: "video-animation" },
-    { name: "Shopify Store", sectionId: "shopify" },
+    { name: "Website Design & Development", href: "/services/web-design" },
+    { name: "E-commerce Solutions", href: "/services/ecommerce" },
+    { name: "Mobile App Development", href: "/services/mobile-apps" },
+    { name: "SEO & Digital Marketing", href: "/services/seo" },
+    { name: "Branding & Identity", href: "/services/branding" },
+    { name: "Video Animation", href: "/services/video-animation" },
+    { name: "Shopify Store", href: "/shopify" },
   ];
 
   const quickLinks = [
@@ -1066,20 +1345,8 @@ function FooterSection() {
     { name: "Contact Us", href: "/contact" },
   ];
 
-  const handleServiceClick = (serviceName: string, sectionId: string) => {
-    if (pathname === "/services") {
-      // If already on services page, just scroll
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 100);
-    } else {
-      // Navigate and scroll after page load
-      sessionStorage.setItem('scrollToService', sectionId);
-      router.push("/services");
-    }
+  const handleServiceClick = (serviceName: string, href: string) => {
+    router.push(href);
   };
 
   const handleQuickLinkClick = (href: string) => {
@@ -1149,7 +1416,7 @@ function FooterSection() {
                   style={{ marginBottom: 14, fontSize: 14, color: "rgba(255,255,255,0.6)", cursor: "pointer" }} 
                   onMouseEnter={e => e.currentTarget.style.color = "#e22222"} 
                   onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.6)"}
-                  onClick={() => handleServiceClick(s.name, s.sectionId)}
+                  onClick={() => handleServiceClick(s.name, s.href)}
                 >
                   {s.name}
                 </li>

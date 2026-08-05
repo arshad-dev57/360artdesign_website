@@ -160,7 +160,7 @@ function ContactUsContent() {
         </svg>
       ),
       label: "Phone",
-      lines: ["+92 300 1234567", "+1 (786)-761-8327"],
+      lines: ["+1 (786)-761-8327",],
     },
     {
       icon: (
@@ -180,7 +180,7 @@ function ContactUsContent() {
         </svg>
       ),
       label: "Address",
-      lines: ["Karachi, Pakistan", "Newark, California 94560, US"],
+      lines: ["Wells Fargo Plaza 333 SE 2nd Ave, Suite 2000 Miami, FL 33131"],
     },
     {
       icon: (
@@ -196,9 +196,6 @@ function ContactUsContent() {
 
   const socials = [
     { label: "Facebook", path: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" },
-    { label: "Twitter", path: "M23 3a10.9 10.9 0 0 1-3.14 1.53A4.48 4.48 0 0 0 22.43.36a9 9 0 0 1-2.88 1.1A4.52 4.52 0 0 0 11.5 8a12.83 12.83 0 0 1-9.28-4.7 4.52 4.52 0 0 0 1.4 6.04 4.49 4.49 0 0 1-2.05-.56v.06a4.52 4.52 0 0 0 3.62 4.43 4.52 4.52 0 0 1-2.04.08 4.52 4.52 0 0 0 4.22 3.14A9.07 9.07 0 0 1 2 19.54a12.8 12.8 0 0 0 6.92 2.02c8.3 0 12.84-6.88 12.84-12.85 0-.2 0-.39-.01-.58A9.17 9.17 0 0 0 24 4.59a8.93 8.93 0 0 1-2.6.71 4.51 4.51 0 0 0 1.98-2.49" },
-    { label: "LinkedIn", path: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z M4 6a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" },
-    { label: "Instagram", path: "M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37zM17.5 6.5h.01M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2z" },
   ];
 
   return (
@@ -455,7 +452,7 @@ function ContactUsContent() {
                   <input
                     type="tel"
                     className="form-input"
-                    placeholder="+92 300 0000000"
+                    placeholder="+1 (786)-761-8327"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   />
